@@ -1,0 +1,114 @@
+[2025-12-10T07:43:51.359Z] Create Product Error: Request failed with status code 400
+Details: {
+  "code": "product_invalid_sku",
+  "message": "מק\"ט לא תקף או כפול.",
+  "data": {
+    "status": 400,
+    "resource_id": 55385,
+    "unique_sku": "E6OYER48S-1"
+  }
+}
+Request Body: {
+  "name": "djjdas",
+  "type": "variable",
+  "status": "publish",
+  "description": "danhkdasd",
+  "short_description": "nnanda",
+  "regular_price": "78",
+  "sale_price": "43",
+  "sku": "E6OYER48S",
+  "manage_stock": true,
+  "stock_quantity": "12",
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [
+    {
+      "id": 55383
+    }
+  ],
+  "virtual": true,
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "weight": "",
+  "dimensions": {
+    "length": "",
+    "width": "",
+    "height": ""
+  },
+  "shipping_class": "",
+  "tax_status": "taxable",
+  "tax_class": "",
+  "attributes": [
+    {
+      "id": 1,
+      "name": "צבע",
+      "options": [
+        "ב׳ז"
+      ],
+      "variation": true,
+      "visible": true
+    }
+  ]
+}
+
+[2025-12-10T07:43:57.515Z] Create Product Error: Request failed with status code 400
+Details: {
+  "code": "product_invalid_sku",
+  "message": "מק\"ט לא תקף או כפול.",
+  "data": {
+    "status": 400,
+    "resource_id": 55385,
+    "unique_sku": "E6OYER48S-1"
+  }
+}
+Request Body: {
+  "name": "djjdas",
+  "type": "variable",
+  "status": "publish",
+  "description": "danhkdasd",
+  "short_description": "nnanda",
+  "regular_price": "78",
+  "sale_price": "43",
+  "sku": "E6OYER48S",
+  "manage_stock": true,
+  "stock_quantity": "12",
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [
+    {
+      "id": 55383
+    }
+  ],
+  "virtual": true,
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "weight": "",
+  "dimensions": {
+    "length": "",
+    "width": "",
+    "height": ""
+  },
+  "shipping_class": "",
+  "tax_status": "taxable",
+  "tax_class": "",
+  "attributes": [
+    {
+      "id": 1,
+      "name": "צבע",
+      "options": [
+        "ב׳ז"
+      ],
+      "variation": true,
+      "visible": true
+    }
+  ]
+}
+

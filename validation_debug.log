@@ -1,0 +1,156 @@
+[2025-12-10T17:01:53.367Z] Validation Error: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "name"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+Request Body: {
+  "type": "variable",
+  "status": "publish",
+  "description": "dsadsa",
+  "short_description": "dadsa",
+  "regular_price": "100",
+  "sale_price": "",
+  "sku": "VO3ZDXUMFENP",
+  "manage_stock": true,
+  "stock_quantity": "12",
+  "stock_status": "instock",
+  "categories": [],
+  "images": [
+    {
+      "id": 55389
+    }
+  ],
+  "virtual": true,
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "weight": "",
+  "dimensions": {
+    "length": "",
+    "width": "",
+    "height": ""
+  },
+  "shipping_class": "",
+  "tax_status": "taxable",
+  "tax_class": "",
+  "attributes": [
+    {
+      "id": 1,
+      "name": "צבע",
+      "options": [
+        "זהב"
+      ],
+      "variation": true,
+      "visible": true
+    }
+  ]
+}
+
+[2025-12-10T17:02:46.496Z] Validation Error: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "name"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+Request Body: {
+  "type": "variable",
+  "status": "publish",
+  "description": "dsadsa",
+  "short_description": "dadsa",
+  "regular_price": "100",
+  "sale_price": "",
+  "sku": "VO3ZDXUMFENP",
+  "manage_stock": true,
+  "stock_quantity": "12",
+  "stock_status": "instock",
+  "categories": [],
+  "images": [
+    {
+      "id": 55389
+    }
+  ],
+  "virtual": true,
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "weight": "",
+  "dimensions": {
+    "length": "",
+    "width": "",
+    "height": ""
+  },
+  "shipping_class": "",
+  "tax_status": "taxable",
+  "tax_class": "",
+  "attributes": [
+    {
+      "id": 1,
+      "name": "צבע",
+      "options": [
+        "זהב"
+      ],
+      "variation": true,
+      "visible": true
+    }
+  ]
+}
+
+[2025-12-10T17:03:09.398Z] Validation Error: [
+  {
+    "expected": "string",
+    "code": "invalid_type",
+    "path": [
+      "name"
+    ],
+    "message": "Invalid input: expected string, received undefined"
+  }
+]
+Request Body: {
+  "type": "variable",
+  "status": "publish",
+  "description": "dsadsa",
+  "short_description": "dadsa",
+  "regular_price": "100",
+  "sale_price": "",
+  "sku": "VO3ZDXUMFENP",
+  "manage_stock": true,
+  "stock_quantity": "12",
+  "stock_status": "instock",
+  "categories": [],
+  "images": [
+    {
+      "id": 55389
+    }
+  ],
+  "virtual": true,
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "weight": "",
+  "dimensions": {
+    "length": "",
+    "width": "",
+    "height": ""
+  },
+  "shipping_class": "",
+  "tax_status": "taxable",
+  "tax_class": "",
+  "attributes": [
+    {
+      "id": 1,
+      "name": "צבע",
+      "options": [
+        "זהב"
+      ],
+      "variation": true,
+      "visible": true
+    }
+  ]
+}
+
