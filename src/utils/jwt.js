@@ -11,15 +11,33 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-// Load RSA keys
-const PRIVATE_KEY = fs.readFileSync(
-    path.join(__dirname, '../../keys/private.pem'),
-    'utf8'
-);
-const PUBLIC_KEY = fs.readFileSync(
-    path.join(__dirname, '../../keys/public.pem'),
-    'utf8'
-);
+// Load RSA keys from environment variables (production) or files (development)
+let PRIVATE_KEY, PUBLIC_KEY;
+
+if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PUBLIC_KEY) {
+    // Production: Load from environment variables
+    // Keys should be base64 encoded in environment variables
+    PRIVATE_KEY = Buffer.from(process.env.JWT_PRIVATE_KEY, 'base64').toString('utf8');
+    PUBLIC_KEY = Buffer.from(process.env.JWT_PUBLIC_KEY, 'base64').toString('utf8');
+    console.log('✅ JWT keys loaded from environment variables');
+} else {
+    // Development: Load from files
+    try {
+        PRIVATE_KEY = fs.readFileSync(
+            path.join(__dirname, '../../keys/private.pem'),
+            'utf8'
+        );
+        PUBLIC_KEY = fs.readFileSync(
+            path.join(__dirname, '../../keys/public.pem'),
+            'utf8'
+        );
+        console.log('✅ JWT keys loaded from files');
+    } catch (error) {
+        console.error('❌ Failed to load JWT keys:', error.message);
+        console.error('Please set JWT_PRIVATE_KEY and JWT_PUBLIC_KEY environment variables or ensure keys exist in keys/ directory');
+        process.exit(1);
+    }
+}
 
 // Token configuration
 const ACCESS_TOKEN_EXPIRY = process.env.JWT_ACCESS_TOKEN_EXPIRY || '15m';
