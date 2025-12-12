@@ -46,3 +46,4 @@ databases:
     plan: free
     databaseName: activepanel
     user: activepanel
+

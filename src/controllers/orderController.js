@@ -11,14 +11,15 @@ const orderController = {
 
             res.json(data);
         } catch (error) {
-            console.error('[OrderController] Error:', error);
             if (error.message === 'WooCommerce settings not configured') {
+                // Don't log expected error for new users without settings
                 return res.status(200).json({
                     success: false,
                     code: 'SETUP_REQUIRED',
                     message: 'Please configure WooCommerce settings first.'
                 });
             }
+            console.error('[OrderController] Error:', error.message);
             res.status(500).json({ error: error.message });
         }
     },

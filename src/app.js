@@ -16,7 +16,7 @@ if (!process.env.FRONTEND_URL) {
 // Enforce HTTPS in production
 let frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
 if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
-    console.warn('⚠️  WARNING: FRONTEND_URL uses HTTP in production. Converting to HTTPS.');
+    console.warn('WARNING: FRONTEND_URL uses HTTP in production. Converting to HTTPS.');
     frontendUrl = frontendUrl.replace('http://', 'https://');
 }
 
@@ -36,7 +36,13 @@ const limiter = rateLimit({
     max: 1000, // limit each IP to 1000 requests per windowMs
     standardHeaders: true,
     legacyHeaders: false,
+    skip: (req) => {
+        // Skip rate limiting for /api/auth/me (has its own more lenient limiter)
+        return req.path === '/api/auth/me';
+    }
 });
+
+// Apply general rate limiter to all routes
 app.use(limiter);
 
 // Health Check
@@ -102,7 +108,9 @@ if (require.main === module) {
     // Connect to Database then start server
     connectDB().then(() => {
         app.listen(PORT, () => {
-            console.log(`Server running on port ${PORT}`);
+            if (process.env.NODE_ENV === 'development') {
+                console.log(`Server running on port ${PORT}`);
+            }
         });
     });
 }

@@ -41,7 +41,7 @@ const upload = multer({
 const uploadMiddleware = (req, res, next) => {
     upload.single('file')(req, res, (err) => {
         if (err) {
-            console.error('Upload Error:', err);
+            console.error('Upload Error:', err.message);
             return res.status(400).json({
                 error: err.message,
                 code: err.code || 'UPLOAD_ERROR'

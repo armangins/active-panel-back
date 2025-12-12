@@ -10,7 +10,7 @@ const getApi = async (userId) => {
     const settings = await Settings.findOne({ user: userId });
 
     if (!settings) {
-        console.error('WooService: No settings found for user:', userId);
+        // Don't log as error - this is expected for new users
         throw new Error('WooCommerce settings not configured');
     }
 
@@ -239,8 +239,10 @@ const wooService = {
 
             return response.data;
         } catch (error) {
-            console.error('Media Upload Error Full Object:', error);
-            console.error('Media Upload Error Data:', error.response?.data || error.message);
+            console.error('Media Upload Error:', error.response?.data?.message || error.message);
+            if (process.env.NODE_ENV === 'development' && error.response?.data) {
+                console.error('Media Upload Error Details:', error.response.data);
+            }
 
             if (error.response?.data?.message) {
                 error.customMessage = `WooCommerce Error: ${error.response.data.message}`;

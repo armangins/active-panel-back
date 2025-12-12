@@ -25,6 +25,14 @@ const userSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    onboardingCompleted: {
+        type: Boolean,
+        default: false
+    },
+    onboardingCompletedAt: {
+        type: Date,
+        default: null
     }
 });
 

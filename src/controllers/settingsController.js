@@ -49,7 +49,10 @@ const settingsController = {
             // Find settings for THIS user
             const settings = await Settings.findOne({ user: req.user._id });
             if (!settings) {
-                return res.status(404).json({ error: 'Settings not found' });
+                // Return 200 with null settings instead of 404 - this is expected for new users
+                return res.status(200).json({
+                    settings: null
+                });
             }
 
             // Return only non-sensitive data with flags

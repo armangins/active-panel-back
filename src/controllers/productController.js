@@ -63,11 +63,13 @@ const productController = {
                 data: product
             });
         } catch (error) {
-            console.error('❌ Product creation error:', error);
+            console.error('Product creation error:', error.message);
 
             // Handle Zod validation errors (if productSchema was used)
             if (error.name === 'ZodError') {
-                console.error('🔴 Validation errors:', JSON.stringify(error.errors, null, 2));
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('Validation errors:', JSON.stringify(error.errors, null, 2));
+                }
                 return res.status(400).json({
                     success: false,
                     message: 'Invalid input: ' + error.errors[0].message,
@@ -77,7 +79,9 @@ const productController = {
 
             // Handle WooCommerce API errors
             if (error.response?.data) {
-                console.error('🔴 WooCommerce API error:', error.response.data);
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('WooCommerce API error:', error.response.data);
+                }
                 return res.status(error.response.status || 500).json({
                     success: false,
                     message: error.response.data.message || 'Failed to create product',
@@ -86,7 +90,6 @@ const productController = {
             }
 
             // Handle other errors
-            console.error('🔴 Unexpected error:', error.message);
             res.status(500).json({
                 success: false,
                 message: error.message || 'Failed to create product'
@@ -130,7 +133,7 @@ const productController = {
                 data: product
             });
         } catch (error) {
-            console.error('❌ Product update error:', error);
+            console.error('Product update error:', error.message);
 
             if (error.message === 'WooCommerce settings not configured') {
                 return res.status(200).json({
@@ -142,7 +145,9 @@ const productController = {
 
             // Handle Zod validation errors (if productSchema was used)
             if (error.name === 'ZodError') {
-                console.error('🔴 Validation errors:', JSON.stringify(error.errors, null, 2));
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('Validation errors:', JSON.stringify(error.errors, null, 2));
+                }
                 return res.status(400).json({
                     success: false,
                     message: 'Invalid input: ' + error.errors[0].message,
@@ -152,7 +157,9 @@ const productController = {
 
             // Handle WooCommerce API errors
             if (error.response?.data) {
-                console.error('🔴 WooCommerce API error:', error.response.data);
+                if (process.env.NODE_ENV === 'development') {
+                    console.error('WooCommerce API error:', error.response.data);
+                }
                 // SECURITY: Don't expose full WooCommerce error details to client
                 const status = error.response.status || 500;
                 const errorMessage = error.response.data.message || 'Failed to update product';
@@ -168,7 +175,6 @@ const productController = {
             }
 
             // Handle other errors
-            console.error('🔴 Unexpected error:', error.message);
             const status = error.response?.status || 500;
             res.status(status).json({
                 success: false,
