@@ -22,11 +22,22 @@ router.get('/google', (req, res, next) => {
 // @route   GET /api/auth/google/callback
 router.get('/google/callback',
     passport.authenticate('google', {
-        failureRedirect: `${process.env.FRONTEND_URL}/login?error=true`
+        failureRedirect: (() => {
+            let url = process.env.FRONTEND_URL;
+            // Enforce HTTPS in production
+            if (process.env.NODE_ENV === 'production' && url.startsWith('http://')) {
+                url = url.replace('http://', 'https://');
+            }
+            return `${url}/login?error=true`;
+        })()
     }),
     (req, res) => {
         // Successful authentication, redirect to frontend
-        const frontendUrl = process.env.FRONTEND_URL;
+        let frontendUrl = process.env.FRONTEND_URL;
+        // Enforce HTTPS in production
+        if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
+            frontendUrl = frontendUrl.replace('http://', 'https://');
+        }
         res.redirect(`${frontendUrl}/dashboard`);
     }
 );
@@ -36,7 +47,11 @@ router.get('/google/callback',
 router.get('/logout', (req, res, next) => {
     req.logout((err) => {
         if (err) { return next(err); }
-        const frontendUrl = process.env.FRONTEND_URL;
+        let frontendUrl = process.env.FRONTEND_URL;
+        // Enforce HTTPS in production
+        if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
+            frontendUrl = frontendUrl.replace('http://', 'https://');
+        }
         res.redirect(`${frontendUrl}/login`);
     });
 });

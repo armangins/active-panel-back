@@ -13,7 +13,12 @@ if (!process.env.FRONTEND_URL) {
 }
 
 // Normalize FRONTEND_URL (remove trailing slash for CORS matching)
-const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
+// Enforce HTTPS in production
+let frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
+if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
+    console.warn('⚠️  WARNING: FRONTEND_URL uses HTTP in production. Converting to HTTPS.');
+    frontendUrl = frontendUrl.replace('http://', 'https://');
+}
 
 // Security Middleware
 app.use(helmet());
