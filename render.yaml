@@ -5,16 +5,8 @@ services:
     plan: free
     # Use Node.js 20 LTS for better MongoDB Atlas compatibility
     # Node.js 22 might have SSL/TLS compatibility issues
-    # Generate RSA keys for JWT during build if they don't exist
-    buildCommand: |
-      npm install
-      mkdir -p keys
-      if [ ! -f keys/private.pem ]; then
-        echo "Generating RSA keys for JWT..."
-        openssl genrsa -out keys/private.pem 2048
-        openssl rsa -in keys/private.pem -pubout -out keys/public.pem
-        echo "RSA keys generated successfully"
-      fi
+    # Generate RSA keys for JWT during build
+    buildCommand: npm install && mkdir -p keys && (test -f keys/private.pem || (openssl genrsa -out keys/private.pem 2048 && openssl rsa -in keys/private.pem -pubout -out keys/public.pem && echo "RSA keys generated"))
     startCommand: npm start
     envVars:
       - key: NODE_ENV
