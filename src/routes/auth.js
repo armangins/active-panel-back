@@ -28,7 +28,7 @@ router.get('/google/callback',
             if (process.env.NODE_ENV === 'production' && url.startsWith('http://')) {
                 url = url.replace('http://', 'https://');
             }
-            return `${url}/login?error=true`;
+            return `${url}/login?error=google_auth_failed`;
         })()
     }),
     (req, res) => {
@@ -41,6 +41,24 @@ router.get('/google/callback',
         res.redirect(`${frontendUrl}/dashboard`);
     }
 );
+
+// @desc    Handle Google OAuth errors with custom error messages
+// @route   GET /api/auth/google/error
+router.get('/google/error', (req, res) => {
+    const errorCode = req.query.code || 'UNKNOWN';
+    const errorMessage = req.query.message || 'Authentication failed';
+    let frontendUrl = process.env.FRONTEND_URL;
+    
+    // Enforce HTTPS in production
+    if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
+        frontendUrl = frontendUrl.replace('http://', 'https://');
+    }
+    
+    // Redirect to login with error details
+    const errorParam = encodeURIComponent(errorMessage);
+    const codeParam = encodeURIComponent(errorCode);
+    res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${errorParam}&code=${codeParam}`);
+});
 
 // @desc    Logout user
 // @route   GET /api/auth/logout

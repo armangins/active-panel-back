@@ -57,10 +57,22 @@ module.exports = function (passport) {
                 if (user) {
                     done(null, user);
                 } else {
-                    // Start of Modification: Prevent auto-registration
-                    // done(null, false) indicates authentication failure (user not found)
-                    done(null, false, { message: 'No account found with this email.' });
-                    // End of Modification
+                    // User doesn't exist - prevent auto-registration
+                    // Check if user exists by email (in case they signed up with email/password)
+                    const userByEmail = await User.findOne({ email: profile.emails[0].value });
+                    if (userByEmail) {
+                        // User exists but didn't sign up with Google
+                        done(null, false, { 
+                            message: 'Account exists but was not created with Google. Please use email/password login.',
+                            code: 'ACCOUNT_EXISTS_NOT_GOOGLE'
+                        });
+                    } else {
+                        // No account found - user needs to sign up first
+                        done(null, false, { 
+                            message: 'No account found with this Google account. Please sign up first to create an account.',
+                            code: 'NO_ACCOUNT_FOUND'
+                        });
+                    }
                 }
             } catch (err) {
                 console.error('Google Strategy Error:', err);
