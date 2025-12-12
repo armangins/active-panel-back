@@ -117,13 +117,22 @@ router.get('/google/callback',
                     return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to create session. Please try again.')}`);
                 }
                 
-                // Log successful login for debugging (production only, no sensitive data)
-                if (process.env.NODE_ENV === 'production') {
-                    console.log('Google OAuth login successful, redirecting to:', `${frontendUrl}/dashboard`);
-                }
-                
-                // Success - redirect to dashboard
-                res.redirect(`${frontendUrl}/dashboard`);
+                // Explicitly save session to MongoDB before redirect
+                // This ensures the session cookie is set in the response
+                req.session.save((saveErr) => {
+                    if (saveErr) {
+                        console.error('Session save error:', saveErr);
+                        return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to save session. Please try again.')}`);
+                    }
+                    
+                    // Log successful login for debugging (production only, no sensitive data)
+                    if (process.env.NODE_ENV === 'production') {
+                        console.log('Google OAuth login successful, session saved, redirecting to:', `${frontendUrl}/dashboard`);
+                    }
+                    
+                    // Success - redirect to dashboard after session is saved
+                    res.redirect(`${frontendUrl}/dashboard`);
+                });
             });
         })(req, res, next);
     }
@@ -201,8 +210,22 @@ router.get('/google/signup/callback',
                     return res.redirect(`${frontendUrl}/login?error=google_signup_failed&message=${encodeURIComponent('Failed to create session. Please try again.')}`);
                 }
                 
-                // Success - redirect to dashboard
-                res.redirect(`${frontendUrl}/dashboard`);
+                // Explicitly save session to MongoDB before redirect
+                // This ensures the session cookie is set in the response
+                req.session.save((saveErr) => {
+                    if (saveErr) {
+                        console.error('Session save error:', saveErr);
+                        return res.redirect(`${frontendUrl}/login?error=google_signup_failed&message=${encodeURIComponent('Failed to save session. Please try again.')}`);
+                    }
+                    
+                    // Log successful login for debugging (production only, no sensitive data)
+                    if (process.env.NODE_ENV === 'production') {
+                        console.log('Google OAuth signup successful, session saved, redirecting to:', `${frontendUrl}/dashboard`);
+                    }
+                    
+                    // Success - redirect to dashboard after session is saved
+                    res.redirect(`${frontendUrl}/dashboard`);
+                });
             });
         })(req, res, next);
     }
