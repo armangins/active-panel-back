@@ -8,10 +8,27 @@ module.exports = function (passport) {
         return;
     }
 
+    // Construct full callback URL for Google OAuth
+    // Google requires absolute URLs, not relative paths
+    // For Render: Use BACKEND_URL or construct from service URL
+    let callbackURL = process.env.GOOGLE_CALLBACK_URL;
+    
+    if (!callbackURL) {
+        // Try to construct from BACKEND_URL or use default relative path
+        if (process.env.BACKEND_URL) {
+            callbackURL = `${process.env.BACKEND_URL}/api/auth/google/callback`;
+        } else {
+            // Relative path - Passport will construct full URL from request
+            callbackURL = '/api/auth/google/callback';
+        }
+    }
+    
+    console.log(`🔐 Google OAuth Callback URL: ${callbackURL}`);
+
     passport.use(new GoogleStrategy({
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: '/api/auth/google/callback'
+        callbackURL: callbackURL
     },
         async (accessToken, refreshToken, profile, done) => {
             const newUser = {
