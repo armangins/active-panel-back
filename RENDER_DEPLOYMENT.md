@@ -249,6 +249,76 @@ In your Render web service dashboard, go to **"Environment"** tab and add each v
 
 ---
 
+## Troubleshooting
+
+### Error: `Cannot find module '/opt/render/project/src/index.js'`
+
+**Problem:** Render is trying to run `node index.js` but can't find it.
+
+**Solution:** ✅ **Fixed!** An `index.js` file has been created in the root directory. This file properly starts your server.
+
+**If you still see this error:**
+1. Make sure `index.js` is committed to Git and pushed to GitHub
+2. Check that Render is using the latest code (trigger a new deploy)
+3. Verify your service's **Start Command** is set to `npm start` (in Render dashboard → Settings)
+
+### Service Won't Start
+
+**Check:**
+1. **Environment Variables**: All required variables are set (check Step 4)
+2. **MongoDB Connection**: Verify `MONGODB_URI` is correct
+3. **Logs**: Check Render service logs for specific errors
+4. **Start Command**: Should be `npm start` (runs `node src/app.js`)
+
+### CORS Errors
+
+**Problem:** Frontend can't connect to backend.
+
+**Solution:**
+1. Verify `FRONTEND_URL` in Render matches your frontend domain exactly
+2. Check frontend `VITE_API_URL` points to your Render backend URL
+3. Ensure both use HTTPS in production
+
+### Database Connection Errors
+
+#### MongoDB Atlas SSL/TLS Errors
+
+**Error:** `tlsv1 alert internal error` or `SSL routines` errors
+
+**Solution for MongoDB Atlas:**
+
+1. **Whitelist Render IP Addresses** (Required!):
+   - Go to MongoDB Atlas Dashboard → **Network Access**
+   - Click **"Add IP Address"**
+   - Click **"Allow Access from Anywhere"** (for development) or add specific IPs:
+     - Render's IP ranges (check Render docs for current IPs)
+     - Or temporarily use `0.0.0.0/0` (allows all IPs - less secure but works)
+   - Click **"Confirm"**
+
+2. **Verify Connection String Format**:
+   - Should be: `mongodb+srv://username:password@cluster.mongodb.net/database`
+   - Make sure username and password are URL-encoded (special characters)
+   - Example: `mongodb+srv://myuser:mypass@cluster0.xxxxx.mongodb.net/activepanel?retryWrites=true&w=majority`
+
+3. **Check Database User Permissions**:
+   - Go to MongoDB Atlas → **Database Access**
+   - Ensure your database user has **"Read and write to any database"** permissions
+   - Or at minimum: **"Read and write"** to your specific database
+
+4. **Verify Database Name**:
+   - Make sure the database name in the connection string matches your actual database
+   - Default database name in connection string is usually after the `/` (e.g., `/activepanel`)
+
+#### Render MongoDB Connection Errors
+
+**Check:**
+1. MongoDB service is running (green status in Render dashboard)
+2. `MONGODB_URI` is correct (copy from MongoDB service → Connect)
+3. Network connectivity (MongoDB and Web service must be in same region)
+4. Use **Internal Connection String** (not external) for better performance
+
+---
+
 ## Security Checklist
 
 Before deploying, ensure:

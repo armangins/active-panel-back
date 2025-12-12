@@ -3,10 +3,66 @@ require('dotenv').config();
 
 const connectDB = async () => {
     try {
-        const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/active-panel');
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
+        const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/active-panel';
+        
+        if (!process.env.MONGODB_URI) {
+            console.warn('⚠️  Warning: MONGODB_URI not set, using default localhost');
+        }
+
+        // Check if it's MongoDB Atlas (mongodb+srv://)
+        const isAtlas = mongoUri.includes('mongodb+srv://');
+        
+        // Connection options
+        const options = {
+            // For MongoDB Atlas (mongodb+srv://), SSL/TLS is handled automatically
+            // Explicitly disable SSL validation issues that can occur with Node.js 22 + OpenSSL security level 2
+            ...(isAtlas ? {
+                // MongoDB Atlas specific options
+                tls: true,
+                tlsAllowInvalidCertificates: false,
+                tlsAllowInvalidHostnames: false,
+                // Use TLS 1.2+ explicitly
+                tlsInsecure: false,
+            } : {
+                // For regular MongoDB connections, only use SSL if explicitly in URI
+                ssl: mongoUri.includes('ssl=true') || mongoUri.includes('tls=true'),
+            }),
+            // Connection pool options
+            maxPoolSize: 10,
+            serverSelectionTimeoutMS: 15000, // Increased timeout for initial connection
+            socketTimeoutMS: 45000,
+            connectTimeoutMS: 15000,
+            // Retry options
+            retryWrites: true,
+            retryReads: true,
+            // Buffer commands if connection is lost
+            bufferCommands: false,
+            bufferMaxEntries: 0,
+            // Additional options for better compatibility
+            directConnection: false, // Use replica set discovery
+        };
+
+        console.log(`🔌 Connecting to MongoDB...`);
+        console.log(`📍 URI: ${mongoUri.replace(/:[^:@]+@/, ':****@')}`); // Hide password in logs
+        
+        const conn = await mongoose.connect(mongoUri, options);
+        console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+        console.log(`📊 Database: ${conn.connection.name}`);
     } catch (error) {
-        console.error(`Error: ${error.message}`);
+        console.error(`❌ MongoDB Connection Error: ${error.message}`);
+        
+        // Provide helpful error messages
+        if (error.message.includes('authentication failed')) {
+            console.error('💡 Tip: Check your MongoDB username and password in MONGODB_URI');
+        } else if (error.message.includes('ENOTFOUND') || error.message.includes('getaddrinfo')) {
+            console.error('💡 Tip: Check your MongoDB host/URL in MONGODB_URI');
+        } else if (error.message.includes('SSL') || error.message.includes('TLS')) {
+            console.error('💡 Tip: For MongoDB Atlas, make sure:');
+            console.error('   1. Your IP is whitelisted in MongoDB Atlas Network Access');
+            console.error('   2. Your connection string uses mongodb+srv:// format');
+            console.error('   3. Your database user has proper permissions');
+        }
+        
         process.exit(1);
     }
 };

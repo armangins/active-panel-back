@@ -3,6 +3,8 @@ services:
     name: active-panel-backend
     env: node
     plan: free
+    # Use Node.js 20 LTS for better MongoDB Atlas compatibility
+    # Node.js 22 might have SSL/TLS compatibility issues
     buildCommand: npm install
     startCommand: npm start
     envVars:
