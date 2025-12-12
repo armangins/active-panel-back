@@ -84,9 +84,36 @@ This guide will help you deploy your backend to Render.com.
 
 ## Step 4: Configure Environment Variables
 
-In your Render web service dashboard, go to **"Environment"** tab and add:
+You have **two options** to set environment variables:
 
-### Required Variables:
+### Option A: Upload .env File (Easiest! ⭐)
+
+1. **Open `.env.production`** file in your backend folder
+2. **Fill in all the values**:
+   - Replace `YOUR_PASSWORD` with your MongoDB password (from Render MongoDB service)
+   - Replace `YOUR_SESSION_SECRET_HERE` with a generated secret (see below)
+   - Replace `YOUR_ENCRYPTION_KEY_HERE` with a generated key (see below)
+   - Replace `https://yourdomain.com` with your actual frontend URL
+   - Update MongoDB URI with your actual connection string from Render
+3. **Generate secrets** (if needed):
+   ```bash
+   # Generate SESSION_SECRET
+   openssl rand -base64 32
+   
+   # Generate ENCRYPTION_KEY
+   openssl rand -base64 32
+   ```
+4. **In Render Dashboard**:
+   - Go to your web service → **"Environment"** tab
+   - Click **"Add from .env"** button
+   - Select your `.env.production` file
+   - All variables will be imported automatically! ✅
+
+### Option B: Add Variables Manually
+
+In your Render web service dashboard, go to **"Environment"** tab and add each variable:
+
+#### Required Variables:
 
 1. **NODE_ENV**
    - Value: `production`
@@ -115,7 +142,7 @@ In your Render web service dashboard, go to **"Environment"** tab and add:
    - **IMPORTANT**: Save this key! If you lose it, all encrypted WooCommerce credentials will be unreadable
    - **IMPORTANT**: Use the same key if you redeploy or change services
 
-### Optional Variables:
+#### Optional Variables:
 
 6. **GOOGLE_CLIENT_ID**
    - Only if using Google OAuth login
