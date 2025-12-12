@@ -49,6 +49,12 @@ const passport = require('passport');
 require('./config/passport')(passport);
 
 // Sessions
+// Security: Require SESSION_SECRET in production
+if (process.env.NODE_ENV === 'production' && !process.env.SESSION_SECRET) {
+    console.error('FATAL ERROR: SESSION_SECRET is required in production');
+    process.exit(1);
+}
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'keyboard cat',
     resave: false,

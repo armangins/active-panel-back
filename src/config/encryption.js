@@ -1,6 +1,13 @@
 const crypto = require('crypto');
 require('dotenv').config();
 
+// Security: Require ENCRYPTION_KEY in production
+// Note: Changing this key will make all encrypted data unreadable
+if (process.env.NODE_ENV === 'production' && !process.env.ENCRYPTION_KEY) {
+    console.error('FATAL ERROR: ENCRYPTION_KEY is required in production');
+    process.exit(1);
+}
+
 const algorithm = 'aes-256-cbc';
 const key = process.env.ENCRYPTION_KEY
     ? crypto.scryptSync(process.env.ENCRYPTION_KEY, 'salt', 32)
