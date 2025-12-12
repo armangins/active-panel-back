@@ -12,10 +12,13 @@ if (!process.env.FRONTEND_URL) {
     process.exit(1);
 }
 
+// Normalize FRONTEND_URL (remove trailing slash for CORS matching)
+const frontendUrl = process.env.FRONTEND_URL.replace(/\/$/, '');
+
 // Security Middleware
 app.use(helmet());
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: frontendUrl,
     credentials: true,
     exposedHeaders: ['x-wp-total', 'x-wp-totalpages']
 }));
