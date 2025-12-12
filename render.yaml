@@ -35,6 +35,11 @@ services:
       - key: GOOGLE_CLIENT_SECRET
         sync: false
         # Optional: Set if using Google OAuth
+      - key: GOOGLE_CALLBACK_URL
+        sync: false
+        # Optional: Explicit Google OAuth callback URL
+        # Format: https://your-backend.onrender.com/api/auth/google/callback
+        # If not set, will auto-construct from BACKEND_URL or service URL
 
 databases:
   - name: active-panel-db

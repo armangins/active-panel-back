@@ -9,18 +9,28 @@ module.exports = function (passport) {
     }
 
     // Construct full callback URL for Google OAuth
-    // Google requires absolute URLs, not relative paths
-    // For Render: Use BACKEND_URL or construct from service URL
+    // Google requires absolute URLs with HTTPS in production
     let callbackURL = process.env.GOOGLE_CALLBACK_URL;
     
     if (!callbackURL) {
-        // Try to construct from BACKEND_URL or use default relative path
+        // Use BACKEND_URL if provided, or construct from Render service URL
         if (process.env.BACKEND_URL) {
-            callbackURL = `${process.env.BACKEND_URL}/api/auth/google/callback`;
+            // Ensure HTTPS
+            const backendUrl = process.env.BACKEND_URL.replace(/^http:\/\//, 'https://');
+            callbackURL = `${backendUrl}/api/auth/google/callback`;
+        } else if (process.env.NODE_ENV === 'production') {
+            // In production, use Render service URL with HTTPS
+            // Render provides HTTPS by default
+            callbackURL = 'https://active-panel-back.onrender.com/api/auth/google/callback';
         } else {
-            // Relative path - Passport will construct full URL from request
+            // Development: use relative path (Passport will construct from request)
             callbackURL = '/api/auth/google/callback';
         }
+    }
+    
+    // Ensure HTTPS in production
+    if (process.env.NODE_ENV === 'production' && callbackURL.startsWith('http://')) {
+        callbackURL = callbackURL.replace('http://', 'https://');
     }
     
     console.log(`🔐 Google OAuth Callback URL: ${callbackURL}`);
