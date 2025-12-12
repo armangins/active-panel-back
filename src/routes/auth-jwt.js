@@ -406,4 +406,103 @@ router.post('/onboarding/complete', ensureAuth, async (req, res) => {
     }
 });
 
+// ==========================================
+// Google OAuth with JWT
+// ==========================================
+
+// @desc    Auth with Google (Login)
+// @route   GET /api/auth/google
+router.get('/google', (req, res, next) => {
+    if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+        return res.status(500).json({ error: 'Google Auth Credentials missing in server configuration.' });
+    }
+    // Use google-login strategy
+    passport.authenticate('google-login', {
+        scope: ['profile', 'email'],
+        prompt: 'select_account'
+    })(req, res, next);
+});
+
+// @desc    Google auth callback - JWT version
+// @route   GET /api/auth/google/callback
+router.get('/google/callback', (req, res, next) => {
+    // Check for OAuth errors in query params
+    if (req.query.error) {
+        let frontendUrl = process.env.FRONTEND_URL;
+        if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
+            frontendUrl = frontendUrl.replace('http://', 'https://');
+        }
+
+        const oauthError = req.query.error;
+        const oauthErrorDescription = req.query.error_description || 'OAuth authentication failed';
+
+        console.error('Google OAuth Error in callback:', oauthError, oauthErrorDescription);
+
+        let errorMessage = 'Authentication failed: Authentication error';
+        if (oauthError === 'access_denied') {
+            errorMessage = 'Authentication cancelled. Please try again.';
+        } else if (oauthError === 'redirect_uri_mismatch') {
+            errorMessage = 'Authentication failed: Callback URL mismatch. Please contact support.';
+        } else {
+            errorMessage = `Authentication failed: ${oauthErrorDescription}`;
+        }
+
+        return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent(errorMessage)}`);
+    }
+
+    passport.authenticate('google-login', async (err, user, info) => {
+        let frontendUrl = process.env.FRONTEND_URL;
+        // Enforce HTTPS in production
+        if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
+            frontendUrl = frontendUrl.replace('http://', 'https://');
+        }
+
+        if (err) {
+            console.error('Google Login OAuth Error:', err.message);
+            let errorMessage = 'An error occurred during authentication. Please try again.';
+            if (err.message) {
+                errorMessage = `Authentication failed: ${err.message}`;
+            }
+            return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent(errorMessage)}`);
+        }
+
+        if (!user) {
+            const errorMessage = info?.message || 'Authentication failed. Please use email/password login.';
+            return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent(errorMessage)}`);
+        }
+
+        try {
+            // Generate token family
+            const tokenFamily = jwt.generateTokenFamily();
+
+            // Generate JWT tokens
+            const accessToken = jwt.generateAccessToken(user);
+            const refreshToken = jwt.generateRefreshToken(user, tokenFamily);
+
+            // Store refresh token in database
+            const refreshTokenExpiry = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+            await RefreshToken.createToken(
+                user._id,
+                refreshToken,
+                tokenFamily,
+                refreshTokenExpiry,
+                {
+                    userAgent: req.headers['user-agent'],
+                    ipAddress: req.ip
+                }
+            );
+
+            // Set refresh token cookie
+            setRefreshTokenCookie(res, refreshToken);
+
+            // Redirect to frontend with access token in URL fragment
+            // URL fragment is not sent to server, only accessible by JavaScript
+            res.redirect(`${frontendUrl}/auth/callback#access_token=${accessToken}`);
+        } catch (error) {
+            console.error('[OAuth JWT] Error generating tokens:', error.message);
+            return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to generate authentication tokens. Please try again.')}`);
+        }
+    })(req, res, next);
+});
+
 module.exports = router;
