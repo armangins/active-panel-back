@@ -55,12 +55,12 @@ router.get('/google/callback',
             if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
                 frontendUrl = frontendUrl.replace('http://', 'https://');
             }
-            
+
             const oauthError = req.query.error;
             const oauthErrorDescription = req.query.error_description || 'OAuth authentication failed';
-            
+
             console.error('Google OAuth Error in callback:', oauthError, oauthErrorDescription);
-            
+
             let errorMessage = 'Authentication failed: Authentication error';
             if (oauthError === 'access_denied') {
                 errorMessage = 'Authentication cancelled. Please try again.';
@@ -69,10 +69,10 @@ router.get('/google/callback',
             } else {
                 errorMessage = `Authentication failed: ${oauthErrorDescription}`;
             }
-            
+
             return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent(errorMessage)}`);
         }
-        
+
         passport.authenticate('google-login', (err, user, info) => {
             let frontendUrl = process.env.FRONTEND_URL;
             // Enforce HTTPS in production
@@ -90,7 +90,7 @@ router.get('/google/callback',
                         name: err.name
                     });
                 }
-                
+
                 let errorMessage = 'An error occurred during authentication. Please try again.';
                 if (err.message) {
                     errorMessage = `Authentication failed: ${err.message}`;
@@ -98,7 +98,7 @@ router.get('/google/callback',
                         errorMessage = 'Authentication failed: Invalid Google OAuth credentials or callback URL mismatch. Please check your Google Cloud Console settings.';
                     }
                 }
-                
+
                 return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent(errorMessage)}`);
             }
 
@@ -116,25 +116,41 @@ router.get('/google/callback',
                     console.error('Login Error:', loginErr);
                     return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to create session. Please try again.')}`);
                 }
-                
+
                 // Ensure session is marked as modified so cookie is set
                 req.session.touch();
-                
+
+                // Log session state before save (production only)
+                if (process.env.NODE_ENV === 'production') {
+                    console.log('[OAuth Login] Before session save:', {
+                        sessionID: req.sessionID,
+                        userID: user._id,
+                        isAuthenticated: req.isAuthenticated()
+                    });
+                }
+
                 // Explicitly save session to MongoDB before redirect
                 // This ensures the session cookie is set in the response
                 req.session.save((saveErr) => {
                     if (saveErr) {
-                        console.error('Session save error:', saveErr);
+                        console.error('[OAuth Login] Session save error:', saveErr);
                         return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to save session. Please try again.')}`);
                     }
-                    
+
                     // Log successful login for debugging
                     if (process.env.NODE_ENV === 'production') {
-                        console.log('Google OAuth login successful, session saved, redirecting to:', `${frontendUrl}/dashboard`);
-                        console.log('Session ID:', req.sessionID);
-                        console.log('Is authenticated:', req.isAuthenticated());
+                        console.log('[OAuth Login] Session saved successfully:', {
+                            sessionID: req.sessionID,
+                            redirectTo: `${frontendUrl}/dashboard`,
+                            isAuthenticated: req.isAuthenticated(),
+                            cookieConfig: {
+                                secure: true,
+                                sameSite: 'none',
+                                httpOnly: true
+                            }
+                        });
                     }
-                    
+
                     // Success - redirect to dashboard after session is saved
                     // Note: express-session should automatically set the cookie in the redirect response
                     res.redirect(`${frontendUrl}/dashboard`);
@@ -154,12 +170,12 @@ router.get('/google/signup/callback',
             if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
                 frontendUrl = frontendUrl.replace('http://', 'https://');
             }
-            
+
             const oauthError = req.query.error;
             const oauthErrorDescription = req.query.error_description || 'OAuth authentication failed';
-            
+
             console.error('Google OAuth Error in callback:', oauthError, oauthErrorDescription);
-            
+
             let errorMessage = 'Authentication failed: Authentication error';
             if (oauthError === 'access_denied') {
                 errorMessage = 'Authentication cancelled. Please try again.';
@@ -168,10 +184,10 @@ router.get('/google/signup/callback',
             } else {
                 errorMessage = `Authentication failed: ${oauthErrorDescription}`;
             }
-            
+
             return res.redirect(`${frontendUrl}/login?error=google_signup_failed&message=${encodeURIComponent(errorMessage)}`);
         }
-        
+
         passport.authenticate('google-signup', (err, user, info) => {
             let frontendUrl = process.env.FRONTEND_URL;
             // Enforce HTTPS in production
@@ -189,7 +205,7 @@ router.get('/google/signup/callback',
                         name: err.name
                     });
                 }
-                
+
                 let errorMessage = 'An error occurred during authentication. Please try again.';
                 if (err.message) {
                     errorMessage = `Authentication failed: ${err.message}`;
@@ -197,7 +213,7 @@ router.get('/google/signup/callback',
                         errorMessage = 'Authentication failed: Invalid Google OAuth credentials or callback URL mismatch. Please check your Google Cloud Console settings.';
                     }
                 }
-                
+
                 return res.redirect(`${frontendUrl}/login?error=google_signup_failed&message=${encodeURIComponent(errorMessage)}`);
             }
 
@@ -215,25 +231,41 @@ router.get('/google/signup/callback',
                     console.error('Login Error:', loginErr);
                     return res.redirect(`${frontendUrl}/login?error=google_signup_failed&message=${encodeURIComponent('Failed to create session. Please try again.')}`);
                 }
-                
+
                 // Ensure session is marked as modified so cookie is set
                 req.session.touch();
-                
+
+                // Log session state before save (production only)
+                if (process.env.NODE_ENV === 'production') {
+                    console.log('[OAuth Signup] Before session save:', {
+                        sessionID: req.sessionID,
+                        userID: user._id,
+                        isAuthenticated: req.isAuthenticated()
+                    });
+                }
+
                 // Explicitly save session to MongoDB before redirect
                 // This ensures the session cookie is set in the response
                 req.session.save((saveErr) => {
                     if (saveErr) {
-                        console.error('Session save error:', saveErr);
+                        console.error('[OAuth Signup] Session save error:', saveErr);
                         return res.redirect(`${frontendUrl}/login?error=google_signup_failed&message=${encodeURIComponent('Failed to save session. Please try again.')}`);
                     }
-                    
+
                     // Log successful login for debugging
                     if (process.env.NODE_ENV === 'production') {
-                        console.log('Google OAuth signup successful, session saved, redirecting to:', `${frontendUrl}/dashboard`);
-                        console.log('Session ID:', req.sessionID);
-                        console.log('Is authenticated:', req.isAuthenticated());
+                        console.log('[OAuth Signup] Session saved successfully:', {
+                            sessionID: req.sessionID,
+                            redirectTo: `${frontendUrl}/dashboard`,
+                            isAuthenticated: req.isAuthenticated(),
+                            cookieConfig: {
+                                secure: true,
+                                sameSite: 'none',
+                                httpOnly: true
+                            }
+                        });
                     }
-                    
+
                     // Success - redirect to dashboard after session is saved
                     // Note: express-session should automatically set the cookie in the redirect response
                     res.redirect(`${frontendUrl}/dashboard`);
@@ -269,6 +301,16 @@ router.post('/logout', (req, res, next) => {
 // @desc    Get current user
 // @route   GET /api/auth/me
 router.get('/me', authCheckLimiter, (req, res) => {
+    // Log session info for debugging (production only)
+    if (process.env.NODE_ENV === 'production') {
+        console.log('[Auth Check] /me endpoint:', {
+            hasSession: !!req.session,
+            sessionID: req.sessionID || 'none',
+            isAuthenticated: req.isAuthenticated(),
+            hasCookie: !!req.headers.cookie
+        });
+    }
+
     if (req.isAuthenticated()) {
         // Include onboarding status in user response
         const userResponse = {
@@ -289,6 +331,35 @@ router.get('/me', authCheckLimiter, (req, res) => {
     }
 });
 
+// @desc    Session test endpoint (for debugging)
+// @route   GET /api/auth/session-test
+router.get('/session-test', (req, res) => {
+    const sessionInfo = {
+        hasSession: !!req.session,
+        sessionID: req.sessionID || null,
+        isAuthenticated: req.isAuthenticated(),
+        user: req.isAuthenticated() ? {
+            id: req.user._id,
+            email: req.user.email,
+            displayName: req.user.displayName
+        } : null,
+        cookies: {
+            hasCookie: !!req.headers.cookie,
+            cookieCount: req.headers.cookie ? req.headers.cookie.split(';').length : 0
+        },
+        sessionData: req.session ? {
+            cookie: req.session.cookie,
+            passport: req.session.passport
+        } : null
+    };
+
+    res.json({
+        success: true,
+        message: 'Session test endpoint',
+        ...sessionInfo
+    });
+});
+
 // @desc    Mark onboarding as completed
 // @route   POST /api/auth/onboarding/complete
 router.post('/onboarding/complete', async (req, res) => {
@@ -306,8 +377,8 @@ router.post('/onboarding/complete', async (req, res) => {
         user.onboardingCompletedAt = new Date();
         await user.save();
 
-        res.json({ 
-            success: true, 
+        res.json({
+            success: true,
             message: 'Onboarding marked as completed',
             onboardingCompleted: true,
             onboardingCompletedAt: user.onboardingCompletedAt

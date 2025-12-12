@@ -5,7 +5,16 @@ services:
     plan: free
     # Use Node.js 20 LTS for better MongoDB Atlas compatibility
     # Node.js 22 might have SSL/TLS compatibility issues
-    buildCommand: npm install
+    # Generate RSA keys for JWT during build if they don't exist
+    buildCommand: |
+      npm install
+      mkdir -p keys
+      if [ ! -f keys/private.pem ]; then
+        echo "Generating RSA keys for JWT..."
+        openssl genrsa -out keys/private.pem 2048
+        openssl rsa -in keys/private.pem -pubout -out keys/public.pem
+        echo "RSA keys generated successfully"
+      fi
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -17,14 +26,25 @@ services:
           property: port
       - key: FRONTEND_URL
         sync: false
-        # Set this to your frontend URL (e.g., https://yourdomain.com)
+        # Set this to your frontend URL (e.g., https://saddlebrown-panther-817210.hostingersite.com)
       - key: MONGODB_URI
         fromDatabase:
           name: active-panel-db
           property: connectionString
-      - key: SESSION_SECRET
-        generateValue: true
-        # Render will auto-generate this, or you can set it manually
+      # JWT Configuration
+      - key: JWT_PRIVATE_KEY_PATH
+        value: ./keys/private.pem
+      - key: JWT_PUBLIC_KEY_PATH
+        value: ./keys/public.pem
+      - key: JWT_ACCESS_TOKEN_EXPIRY
+        value: 15m
+      - key: JWT_REFRESH_TOKEN_EXPIRY
+        value: 7d
+      - key: JWT_ISSUER
+        value: active-panel-api
+      - key: JWT_AUDIENCE
+        value: active-panel-frontend
+      # Encryption & OAuth
       - key: ENCRYPTION_KEY
         sync: false
         # IMPORTANT: Set this manually in Render dashboard
