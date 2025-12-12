@@ -117,6 +117,9 @@ router.get('/google/callback',
                     return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to create session. Please try again.')}`);
                 }
                 
+                // Ensure session is marked as modified so cookie is set
+                req.session.touch();
+                
                 // Explicitly save session to MongoDB before redirect
                 // This ensures the session cookie is set in the response
                 req.session.save((saveErr) => {
@@ -125,12 +128,15 @@ router.get('/google/callback',
                         return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to save session. Please try again.')}`);
                     }
                     
-                    // Log successful login for debugging (production only, no sensitive data)
+                    // Log successful login for debugging
                     if (process.env.NODE_ENV === 'production') {
                         console.log('Google OAuth login successful, session saved, redirecting to:', `${frontendUrl}/dashboard`);
+                        console.log('Session ID:', req.sessionID);
+                        console.log('Is authenticated:', req.isAuthenticated());
                     }
                     
                     // Success - redirect to dashboard after session is saved
+                    // Note: express-session should automatically set the cookie in the redirect response
                     res.redirect(`${frontendUrl}/dashboard`);
                 });
             });
@@ -210,6 +216,9 @@ router.get('/google/signup/callback',
                     return res.redirect(`${frontendUrl}/login?error=google_signup_failed&message=${encodeURIComponent('Failed to create session. Please try again.')}`);
                 }
                 
+                // Ensure session is marked as modified so cookie is set
+                req.session.touch();
+                
                 // Explicitly save session to MongoDB before redirect
                 // This ensures the session cookie is set in the response
                 req.session.save((saveErr) => {
@@ -218,12 +227,15 @@ router.get('/google/signup/callback',
                         return res.redirect(`${frontendUrl}/login?error=google_signup_failed&message=${encodeURIComponent('Failed to save session. Please try again.')}`);
                     }
                     
-                    // Log successful login for debugging (production only, no sensitive data)
+                    // Log successful login for debugging
                     if (process.env.NODE_ENV === 'production') {
                         console.log('Google OAuth signup successful, session saved, redirecting to:', `${frontendUrl}/dashboard`);
+                        console.log('Session ID:', req.sessionID);
+                        console.log('Is authenticated:', req.isAuthenticated());
                     }
                     
                     // Success - redirect to dashboard after session is saved
+                    // Note: express-session should automatically set the cookie in the redirect response
                     res.redirect(`${frontendUrl}/dashboard`);
                 });
             });

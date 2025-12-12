@@ -7,6 +7,10 @@ require('dotenv').config();
 
 const app = express();
 
+// Trust proxy - required for correct cookie handling behind reverse proxy (Render, etc.)
+// This ensures Express correctly identifies HTTPS and sets secure cookies
+app.set('trust proxy', 1);
+
 if (!process.env.FRONTEND_URL) {
     console.error('FATAL ERROR: FRONTEND_URL is not defined in .env');
     process.exit(1);
@@ -93,7 +97,10 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'keyboard cat',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/active-panel' }),
+    store: MongoStore.create({ 
+        mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/active-panel',
+        touchAfter: 24 * 3600 // Lazy session update (24 hours)
+    }),
     cookie: {
         secure: process.env.NODE_ENV === 'production', // true for HTTPS in production
         httpOnly: true,
@@ -102,7 +109,12 @@ app.use(session({
         path: '/', // Ensure cookie is available for all paths
         domain: getCookieDomain(), // undefined for cross-origin (browser handles it)
     },
-    name: 'connect.sid' // Explicit session cookie name
+    name: 'connect.sid', // Explicit session cookie name
+    rolling: false, // Don't reset expiration on every request
+    genid: function(req) {
+        // Generate session ID
+        return require('crypto').randomBytes(16).toString('hex');
+    }
 }));
 
 // Passport middleware
