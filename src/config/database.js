@@ -13,20 +13,8 @@ const connectDB = async () => {
         const isAtlas = mongoUri.includes('mongodb+srv://');
         
         // Connection options
+        // For MongoDB Atlas (mongodb+srv://), SSL/TLS is handled automatically - no need to set TLS options
         const options = {
-            // For MongoDB Atlas (mongodb+srv://), SSL/TLS is handled automatically
-            // Explicitly disable SSL validation issues that can occur with Node.js 22 + OpenSSL security level 2
-            ...(isAtlas ? {
-                // MongoDB Atlas specific options
-                tls: true,
-                tlsAllowInvalidCertificates: false,
-                tlsAllowInvalidHostnames: false,
-                // Use TLS 1.2+ explicitly
-                tlsInsecure: false,
-            } : {
-                // For regular MongoDB connections, only use SSL if explicitly in URI
-                ssl: mongoUri.includes('ssl=true') || mongoUri.includes('tls=true'),
-            }),
             // Connection pool options
             maxPoolSize: 10,
             serverSelectionTimeoutMS: 15000, // Increased timeout for initial connection
@@ -38,8 +26,10 @@ const connectDB = async () => {
             // Buffer commands if connection is lost
             bufferCommands: false,
             bufferMaxEntries: 0,
-            // Additional options for better compatibility
-            directConnection: false, // Use replica set discovery
+            // For non-Atlas MongoDB connections, only use SSL if explicitly in URI
+            ...(isAtlas ? {} : {
+                ssl: mongoUri.includes('ssl=true') || mongoUri.includes('tls=true'),
+            }),
         };
 
         console.log(`🔌 Connecting to MongoDB...`);
