@@ -117,6 +117,11 @@ router.get('/google/callback',
                     return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to create session. Please try again.')}`);
                 }
                 
+                // Log successful login for debugging (production only, no sensitive data)
+                if (process.env.NODE_ENV === 'production') {
+                    console.log('Google OAuth login successful, redirecting to:', `${frontendUrl}/dashboard`);
+                }
+                
                 // Success - redirect to dashboard
                 res.redirect(`${frontendUrl}/dashboard`);
             });

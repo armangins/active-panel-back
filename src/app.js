@@ -20,6 +20,11 @@ if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) 
     frontendUrl = frontendUrl.replace('http://', 'https://');
 }
 
+// Log frontend URL in production for debugging (without exposing sensitive info)
+if (process.env.NODE_ENV === 'production') {
+    console.log(`Frontend URL configured: ${frontendUrl}`);
+}
+
 // Security Middleware
 app.use(helmet());
 app.use(cors({
@@ -69,17 +74,35 @@ if (process.env.NODE_ENV === 'production' && !process.env.SESSION_SECRET) {
     process.exit(1);
 }
 
+// Parse frontend URL to extract domain for cookie configuration
+const getCookieDomain = () => {
+    if (process.env.NODE_ENV === 'production') {
+        try {
+            const url = new URL(frontendUrl);
+            // For cross-origin, don't set domain - browser handles it
+            // Only set domain if frontend and backend are on same domain
+            return undefined; // Let browser handle domain automatically
+        } catch (e) {
+            return undefined;
+        }
+    }
+    return undefined; // Development: no domain restriction
+};
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'keyboard cat',
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/active-panel' }),
     cookie: {
-        secure: process.env.NODE_ENV === 'production', // false for localhost
+        secure: process.env.NODE_ENV === 'production', // true for HTTPS in production
         httpOnly: true,
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'lax' is better for local dev than 'none' (which requires secure)
-        maxAge: 24 * 60 * 60 * 1000 // 1 day
-    }
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' required for cross-origin in production
+        maxAge: 24 * 60 * 60 * 1000, // 1 day
+        path: '/', // Ensure cookie is available for all paths
+        domain: getCookieDomain(), // undefined for cross-origin (browser handles it)
+    },
+    name: 'connect.sid' // Explicit session cookie name
 }));
 
 // Passport middleware
