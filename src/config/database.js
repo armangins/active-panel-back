@@ -23,14 +23,14 @@ const connectDB = async () => {
             // Retry options
             retryWrites: true,
             retryReads: true,
-            // Buffer commands if connection is lost
-            bufferCommands: false,
-            bufferMaxEntries: 0,
             // For non-Atlas MongoDB connections, only use SSL if explicitly in URI
             ...(isAtlas ? {} : {
                 ssl: mongoUri.includes('ssl=true') || mongoUri.includes('tls=true'),
             }),
         };
+
+        // Disable Mongoose command buffering globally (operations fail immediately if not connected)
+        mongoose.set('bufferCommands', false);
 
         console.log(`🔌 Connecting to MongoDB...`);
         console.log(`📍 URI: ${mongoUri.replace(/:[^:@]+@/, ':****@')}`); // Hide password in logs
