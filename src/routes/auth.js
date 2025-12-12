@@ -21,44 +21,39 @@ router.get('/google', (req, res, next) => {
 // @desc    Google auth callback
 // @route   GET /api/auth/google/callback
 router.get('/google/callback',
-    passport.authenticate('google', {
-        failureRedirect: (() => {
-            let url = process.env.FRONTEND_URL;
+    (req, res, next) => {
+        passport.authenticate('google', (err, user, info) => {
+            let frontendUrl = process.env.FRONTEND_URL;
             // Enforce HTTPS in production
-            if (process.env.NODE_ENV === 'production' && url.startsWith('http://')) {
-                url = url.replace('http://', 'https://');
+            if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
+                frontendUrl = frontendUrl.replace('http://', 'https://');
             }
-            return `${url}/login?error=google_auth_failed`;
-        })()
-    }),
-    (req, res) => {
-        // Successful authentication, redirect to frontend
-        let frontendUrl = process.env.FRONTEND_URL;
-        // Enforce HTTPS in production
-        if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
-            frontendUrl = frontendUrl.replace('http://', 'https://');
-        }
-        res.redirect(`${frontendUrl}/dashboard`);
+
+            if (err) {
+                // Server error
+                console.error('Google OAuth Error:', err);
+                return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('An error occurred during authentication. Please try again.')}`);
+            }
+
+            if (!user) {
+                // Authentication failed - user doesn't exist or other issue
+                const errorMessage = info?.message || 'Authentication failed. Please sign up first.';
+                const errorCode = info?.code || 'AUTH_FAILED';
+                return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent(errorMessage)}&code=${encodeURIComponent(errorCode)}`);
+            }
+
+            // Successful authentication - log user in
+            req.logIn(user, (loginErr) => {
+                if (loginErr) {
+                    console.error('Login Error:', loginErr);
+                    return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to create session. Please try again.')}`);
+                }
+                // Success - redirect to dashboard
+                res.redirect(`${frontendUrl}/dashboard`);
+            });
+        })(req, res, next);
     }
 );
-
-// @desc    Handle Google OAuth errors with custom error messages
-// @route   GET /api/auth/google/error
-router.get('/google/error', (req, res) => {
-    const errorCode = req.query.code || 'UNKNOWN';
-    const errorMessage = req.query.message || 'Authentication failed';
-    let frontendUrl = process.env.FRONTEND_URL;
-    
-    // Enforce HTTPS in production
-    if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
-        frontendUrl = frontendUrl.replace('http://', 'https://');
-    }
-    
-    // Redirect to login with error details
-    const errorParam = encodeURIComponent(errorMessage);
-    const codeParam = encodeURIComponent(errorCode);
-    res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${errorParam}&code=${codeParam}`);
-});
 
 // @desc    Logout user
 // @route   GET /api/auth/logout
