@@ -36,13 +36,6 @@ if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PUBLIC_KEY) {
         PUBLIC_KEY = publicKeyStr;
 
         console.log('✅ JWT keys loaded from environment variables');
-        console.log('Private key length:', PRIVATE_KEY.length);
-        console.log('Public key length:', PUBLIC_KEY.length);
-        console.log('Private key first 50 chars:', PRIVATE_KEY.substring(0, 50));
-        console.log('Private key last 50 chars:', PRIVATE_KEY.substring(PRIVATE_KEY.length - 50));
-        console.log('Private key type:', typeof PRIVATE_KEY);
-        console.log('Private key includes BEGIN:', PRIVATE_KEY.includes('-----BEGIN PRIVATE KEY-----'));
-        console.log('Private key includes END:', PRIVATE_KEY.includes('-----END PRIVATE KEY-----'));
     } catch (error) {
         console.error('❌ Failed to load JWT keys from environment variables:', error.message);
         console.error('Please ensure JWT_PRIVATE_KEY and JWT_PUBLIC_KEY are set correctly');
