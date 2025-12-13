@@ -6,7 +6,7 @@ const path = require('path');
 const crypto = require('crypto');
 
 // Load RSA keys from environment variables (production) or files (development)
-// IMPORTANT: jsonwebtoken v9+ requires keys as Buffer objects for RS256
+// Keep keys as strings - Buffers don't work consistently across platforms
 let PRIVATE_KEY, PUBLIC_KEY;
 
 if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PUBLIC_KEY) {
@@ -31,9 +31,9 @@ if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PUBLIC_KEY) {
             throw new Error('Public key is not properly formatted (missing -----BEGIN PUBLIC KEY-----)');
         }
 
-        // Convert to Buffer objects (required by jsonwebtoken v9 for RS256)
-        PRIVATE_KEY = Buffer.from(privateKeyStr, 'utf8');
-        PUBLIC_KEY = Buffer.from(publicKeyStr, 'utf8');
+        // Keep as strings (works across all platforms)
+        PRIVATE_KEY = privateKeyStr;
+        PUBLIC_KEY = publicKeyStr;
 
         console.log('✅ JWT keys loaded from environment variables');
         console.log('Private key length:', PRIVATE_KEY.length);
@@ -44,13 +44,15 @@ if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PUBLIC_KEY) {
         process.exit(1);
     }
 } else {
-    // Development: Load from files as Buffers
+    // Development: Load from files as strings
     try {
         PRIVATE_KEY = fs.readFileSync(
-            path.join(__dirname, '../../keys/private.pem')
+            path.join(__dirname, '../../keys/private.pem'),
+            'utf8'
         );
         PUBLIC_KEY = fs.readFileSync(
-            path.join(__dirname, '../../keys/public.pem')
+            path.join(__dirname, '../../keys/public.pem'),
+            'utf8'
         );
         console.log('✅ JWT keys loaded from files');
     } catch (error) {
@@ -101,14 +103,6 @@ const generateAccessToken = (user) => {
         jwtid: generateJti() // For blacklisting
     };
 
-    // Debug logging
-    console.log('[JWT Debug] Generating access token...');
-    console.log('[JWT Debug] PRIVATE_KEY type:', typeof PRIVATE_KEY);
-    console.log('[JWT Debug] PRIVATE_KEY is Buffer:', Buffer.isBuffer(PRIVATE_KEY));
-    console.log('[JWT Debug] PRIVATE_KEY length:', PRIVATE_KEY.length);
-    console.log('[JWT Debug] PRIVATE_KEY first 50 bytes:', PRIVATE_KEY.slice(0, 50).toString());
-
-    // PEM-formatted keys can be passed directly as strings or Buffers
     return jwt.sign(payload, PRIVATE_KEY, options);
 };
 
