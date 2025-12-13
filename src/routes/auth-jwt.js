@@ -499,9 +499,10 @@ router.get('/google/callback', (req, res, next) => {
             // Set refresh token cookie
             setRefreshTokenCookie(res, refreshToken);
 
-            // Redirect to frontend with access token in URL fragment
-            // URL fragment is not sent to server, only accessible by JavaScript
-            res.redirect(`${frontendUrl}/auth/callback#access_token=${accessToken}`);
+            // Redirect to frontend with access token in URL query parameter (safer for mobile redirects)
+            // Note: In a high security context, we would use a code exchange, but for this implementation
+            // query params are more robust than fragments which can be stripped by mobile browsers
+            res.redirect(`${frontendUrl}/auth/callback?access_token=${accessToken}`);
         } catch (error) {
             console.error('[OAuth JWT] Error generating tokens:', error.message);
             return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to generate authentication tokens. Please try again.')}`);
