@@ -101,7 +101,14 @@ const generateAccessToken = (user) => {
         jwtid: generateJti() // For blacklisting
     };
 
-    // PEM-formatted keys can be passed directly as strings
+    // Debug logging
+    console.log('[JWT Debug] Generating access token...');
+    console.log('[JWT Debug] PRIVATE_KEY type:', typeof PRIVATE_KEY);
+    console.log('[JWT Debug] PRIVATE_KEY is Buffer:', Buffer.isBuffer(PRIVATE_KEY));
+    console.log('[JWT Debug] PRIVATE_KEY length:', PRIVATE_KEY.length);
+    console.log('[JWT Debug] PRIVATE_KEY first 50 bytes:', PRIVATE_KEY.slice(0, 50).toString());
+
+    // PEM-formatted keys can be passed directly as strings or Buffers
     return jwt.sign(payload, PRIVATE_KEY, options);
 };
 
