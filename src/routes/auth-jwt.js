@@ -57,10 +57,13 @@ const refreshLimiter = rateLimit({
  * Helper: Set refresh token cookie
  */
 const setRefreshTokenCookie = (res, refreshToken) => {
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'lax',
+        // Secure is REQUIRED for SameSite=None
+        secure: isProduction,
+        // SameSite=None is REQUIRED for cross-site cookies (different domains)
+        sameSite: isProduction ? 'none' : 'lax',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
         path: '/api/auth/refresh' // Only send to refresh endpoint
     });
@@ -70,10 +73,11 @@ const setRefreshTokenCookie = (res, refreshToken) => {
  * Helper: Clear refresh token cookie
  */
 const clearRefreshTokenCookie = (res) => {
+    const isProduction = process.env.NODE_ENV === 'production';
     res.clearCookie('refreshToken', {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'lax',
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : 'lax',
         path: '/api/auth/refresh'
     });
 };
