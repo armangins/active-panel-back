@@ -6,32 +6,34 @@ const path = require('path');
 const crypto = require('crypto');
 
 // Load RSA keys from environment variables (production) or files (development)
+// IMPORTANT: jsonwebtoken v9+ requires keys as Buffer objects for RS256
 let PRIVATE_KEY, PUBLIC_KEY;
 
 if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PUBLIC_KEY) {
     // Production: Load from environment variables
     try {
         // Try to detect if keys are base64 encoded or plain text
-        let privateKey = process.env.JWT_PRIVATE_KEY;
-        let publicKey = process.env.JWT_PUBLIC_KEY;
+        let privateKeyStr = process.env.JWT_PRIVATE_KEY;
+        let publicKeyStr = process.env.JWT_PUBLIC_KEY;
 
         // If keys don't start with -----BEGIN, they're probably base64 encoded
-        if (!privateKey.includes('-----BEGIN')) {
+        if (!privateKeyStr.includes('-----BEGIN')) {
             console.log('Decoding JWT keys from base64...');
-            privateKey = Buffer.from(privateKey, 'base64').toString('utf8');
-            publicKey = Buffer.from(publicKey, 'base64').toString('utf8');
+            privateKeyStr = Buffer.from(privateKeyStr, 'base64').toString('utf8');
+            publicKeyStr = Buffer.from(publicKeyStr, 'base64').toString('utf8');
         }
 
         // Verify keys are properly formatted
-        if (!privateKey.includes('-----BEGIN PRIVATE KEY-----')) {
+        if (!privateKeyStr.includes('-----BEGIN PRIVATE KEY-----')) {
             throw new Error('Private key is not properly formatted (missing -----BEGIN PRIVATE KEY-----)');
         }
-        if (!publicKey.includes('-----BEGIN PUBLIC KEY-----')) {
+        if (!publicKeyStr.includes('-----BEGIN PUBLIC KEY-----')) {
             throw new Error('Public key is not properly formatted (missing -----BEGIN PUBLIC KEY-----)');
         }
 
-        PRIVATE_KEY = privateKey;
-        PUBLIC_KEY = publicKey;
+        // Convert to Buffer objects (required by jsonwebtoken v9 for RS256)
+        PRIVATE_KEY = Buffer.from(privateKeyStr, 'utf8');
+        PUBLIC_KEY = Buffer.from(publicKeyStr, 'utf8');
 
         console.log('✅ JWT keys loaded from environment variables');
         console.log('Private key length:', PRIVATE_KEY.length);
@@ -42,15 +44,13 @@ if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PUBLIC_KEY) {
         process.exit(1);
     }
 } else {
-    // Development: Load from files
+    // Development: Load from files as Buffers
     try {
         PRIVATE_KEY = fs.readFileSync(
-            path.join(__dirname, '../../keys/private.pem'),
-            'utf8'
+            path.join(__dirname, '../../keys/private.pem')
         );
         PUBLIC_KEY = fs.readFileSync(
-            path.join(__dirname, '../../keys/public.pem'),
-            'utf8'
+            path.join(__dirname, '../../keys/public.pem')
         );
         console.log('✅ JWT keys loaded from files');
     } catch (error) {
@@ -101,8 +101,8 @@ const generateAccessToken = (user) => {
         jwtid: generateJti() // For blacklisting
     };
 
-    // Pass key as object for RS256
-    return jwt.sign(payload, { key: PRIVATE_KEY, passphrase: '' }, options);
+    // PEM-formatted keys can be passed directly as strings
+    return jwt.sign(payload, PRIVATE_KEY, options);
 };
 
 /**
@@ -128,8 +128,8 @@ const generateRefreshToken = (user, tokenFamily) => {
         jwtid: generateJti()
     };
 
-    // Pass key as object for RS256
-    return jwt.sign(payload, { key: PRIVATE_KEY, passphrase: '' }, options);
+    // PEM-formatted keys can be passed directly as strings
+    return jwt.sign(payload, PRIVATE_KEY, options);
 };
 
 /**
