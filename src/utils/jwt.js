@@ -1,10 +1,4 @@
-/**
- * JWT Utility Functions
- * 
- * Secure JWT token generation and verification using RSA asymmetric encryption
- * - Access tokens: Short-lived (15 min), stored in memory
- * - Refresh tokens: Long-lived (7 days), stored in httpOnly cookies
- */
+
 
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
@@ -16,19 +10,35 @@ let PRIVATE_KEY, PUBLIC_KEY;
 
 if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PUBLIC_KEY) {
     // Production: Load from environment variables
-    // Keys are base64 encoded in environment variables
     try {
-        PRIVATE_KEY = Buffer.from(process.env.JWT_PRIVATE_KEY, 'base64').toString('utf8');
-        PUBLIC_KEY = Buffer.from(process.env.JWT_PUBLIC_KEY, 'base64').toString('utf8');
+        // Try to detect if keys are base64 encoded or plain text
+        let privateKey = process.env.JWT_PRIVATE_KEY;
+        let publicKey = process.env.JWT_PUBLIC_KEY;
 
-        // Verify keys are properly formatted (should start with -----BEGIN)
-        if (!PRIVATE_KEY.includes('-----BEGIN') || !PUBLIC_KEY.includes('-----BEGIN')) {
-            throw new Error('JWT keys are not properly formatted after base64 decoding');
+        // If keys don't start with -----BEGIN, they're probably base64 encoded
+        if (!privateKey.includes('-----BEGIN')) {
+            console.log('Decoding JWT keys from base64...');
+            privateKey = Buffer.from(privateKey, 'base64').toString('utf8');
+            publicKey = Buffer.from(publicKey, 'base64').toString('utf8');
         }
 
+        // Verify keys are properly formatted
+        if (!privateKey.includes('-----BEGIN PRIVATE KEY-----')) {
+            throw new Error('Private key is not properly formatted (missing -----BEGIN PRIVATE KEY-----)');
+        }
+        if (!publicKey.includes('-----BEGIN PUBLIC KEY-----')) {
+            throw new Error('Public key is not properly formatted (missing -----BEGIN PUBLIC KEY-----)');
+        }
+
+        PRIVATE_KEY = privateKey;
+        PUBLIC_KEY = publicKey;
+
         console.log('✅ JWT keys loaded from environment variables');
+        console.log('Private key length:', PRIVATE_KEY.length);
+        console.log('Public key length:', PUBLIC_KEY.length);
     } catch (error) {
-        console.error('❌ Failed to decode JWT keys from environment variables:', error.message);
+        console.error('❌ Failed to load JWT keys from environment variables:', error.message);
+        console.error('Please ensure JWT_PRIVATE_KEY and JWT_PUBLIC_KEY are set correctly');
         process.exit(1);
     }
 } else {
@@ -56,10 +66,6 @@ const REFRESH_TOKEN_EXPIRY = process.env.JWT_REFRESH_TOKEN_EXPIRY || '7d';
 const ISSUER = process.env.JWT_ISSUER || 'active-panel-api';
 const AUDIENCE = process.env.JWT_AUDIENCE || 'active-panel-frontend';
 
-/**
- * Generate unique token family ID
- * Used to track refresh token families and detect token reuse
- */
 const generateTokenFamily = () => {
     return crypto.randomBytes(16).toString('hex');
 };
