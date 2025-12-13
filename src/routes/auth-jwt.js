@@ -505,4 +505,38 @@ router.get('/google/callback', (req, res, next) => {
     })(req, res, next);
 });
 
+// Temporary debug route to check JWT keys
+router.get('/debug-jwt-keys', (req, res) => {
+    const jwtUtils = require('../utils/jwt');
+    // We need to access the private variables from jwt.js
+    // Since we can't easily export them without changing the interface, 
+    // we'll check the env vars directly here as a proxy
+
+    const envPrivate = process.env.JWT_PRIVATE_KEY || 'MISSING';
+    const isBase64 = !envPrivate.includes('-----BEGIN');
+
+    let decoded = envPrivate;
+    let decodeError = null;
+
+    if (isBase64) {
+        try {
+            decoded = Buffer.from(envPrivate, 'base64').toString('utf8');
+        } catch (e) {
+            decodeError = e.message;
+        }
+    }
+
+    res.json({
+        env_length: envPrivate.length,
+        is_base64: isBase64,
+        decoded_length: decoded.length,
+        starts_with_begin: decoded.includes('-----BEGIN PRIVATE KEY-----'),
+        ends_with_end: decoded.includes('-----END PRIVATE KEY-----'),
+        first_50_chars: decoded.substring(0, 50),
+        last_50_chars: decoded.substring(decoded.length - 50),
+        decode_error: decodeError,
+        node_version: process.version
+    });
+});
+
 module.exports = router;
