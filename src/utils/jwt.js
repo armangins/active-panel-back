@@ -101,7 +101,8 @@ const generateAccessToken = (user) => {
         jwtid: generateJti() // For blacklisting
     };
 
-    return jwt.sign(payload, PRIVATE_KEY, options);
+    // Pass key as object for RS256
+    return jwt.sign(payload, { key: PRIVATE_KEY, passphrase: '' }, options);
 };
 
 /**
@@ -127,7 +128,8 @@ const generateRefreshToken = (user, tokenFamily) => {
         jwtid: generateJti()
     };
 
-    return jwt.sign(payload, PRIVATE_KEY, options);
+    // Pass key as object for RS256
+    return jwt.sign(payload, { key: PRIVATE_KEY, passphrase: '' }, options);
 };
 
 /**
