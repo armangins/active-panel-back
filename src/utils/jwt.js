@@ -16,10 +16,21 @@ let PRIVATE_KEY, PUBLIC_KEY;
 
 if (process.env.JWT_PRIVATE_KEY && process.env.JWT_PUBLIC_KEY) {
     // Production: Load from environment variables
-    // Keys should be base64 encoded in environment variables
-    PRIVATE_KEY = Buffer.from(process.env.JWT_PRIVATE_KEY, 'base64').toString('utf8');
-    PUBLIC_KEY = Buffer.from(process.env.JWT_PUBLIC_KEY, 'base64').toString('utf8');
-    console.log('✅ JWT keys loaded from environment variables');
+    // Keys are base64 encoded in environment variables
+    try {
+        PRIVATE_KEY = Buffer.from(process.env.JWT_PRIVATE_KEY, 'base64').toString('utf8');
+        PUBLIC_KEY = Buffer.from(process.env.JWT_PUBLIC_KEY, 'base64').toString('utf8');
+
+        // Verify keys are properly formatted (should start with -----BEGIN)
+        if (!PRIVATE_KEY.includes('-----BEGIN') || !PUBLIC_KEY.includes('-----BEGIN')) {
+            throw new Error('JWT keys are not properly formatted after base64 decoding');
+        }
+
+        console.log('✅ JWT keys loaded from environment variables');
+    } catch (error) {
+        console.error('❌ Failed to decode JWT keys from environment variables:', error.message);
+        process.exit(1);
+    }
 } else {
     // Development: Load from files
     try {
