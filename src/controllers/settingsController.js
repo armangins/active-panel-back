@@ -29,7 +29,7 @@ const settingsController = {
                 settings.wordpressAppPassword = encryptedAppPassword;
                 await settings.save();
             } else {
-                await Settings.create({
+                settings = await Settings.create({
                     user: req.user._id,
                     storeUrl: finalStoreUrl,
                     consumerKey: encryptedKey,
