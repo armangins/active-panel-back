@@ -20,7 +20,7 @@ const {
 } = require('../middleware/validation');
 const { apiLimiter, mutationLimiter, batchLimiter } = require('../middleware/rateLimiter');
 const validate = require('../middleware/validate');
-const { productSchema, variationSchema } = require('../schemas/product');
+const { productSchema, variationSchema, updateProductSchema, updateVariationSchema } = require('../schemas/product');
 const { categorySchema } = require('../schemas/category');
 const { couponSchema } = require('../schemas/coupon');
 
@@ -64,7 +64,8 @@ router.get('/products', ensureAuth, productController.getAllProducts);
 router.get('/products/:id', ensureAuth, productController.getProductById);
 router.post('/products', ensureAuth, mutationLimiter, validate(productSchema), productController.createProduct);
 router.post('/products/batch', ensureAuth, batchLimiter, productController.batchProducts);
-router.put('/products/:id', ensureAuth, mutationLimiter, validate(productSchema), productController.updateProduct);
+router.post('/products/:id/sync', ensureAuth, mutationLimiter, productController.syncProductPrice);
+router.put('/products/:id', ensureAuth, mutationLimiter, validate(updateProductSchema), productController.updateProduct);
 router.delete('/products/:id', ensureAuth, productController.deleteProduct);
 
 // Variation Routes (must come before generic product routes to avoid conflicts)
@@ -97,7 +98,7 @@ router.post('/products/:productId/variations',
 router.put('/products/:productId/variations/:id',
     ensureAuth,
     mutationLimiter,
-    validate(variationSchema),
+    validate(updateVariationSchema),
     variationController.updateVariation
 );
 

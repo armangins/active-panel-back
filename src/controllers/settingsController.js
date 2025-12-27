@@ -38,7 +38,16 @@ const settingsController = {
                 });
             }
 
-            res.json({ message: 'Settings saved successfully' });
+            res.json({
+                message: 'Settings saved successfully',
+                settings: {
+                    storeUrl: settings.storeUrl,
+                    hasConsumerKey: !!settings.consumerKey,
+                    hasConsumerSecret: !!settings.consumerSecret,
+                    hasWordpressUsername: !!settings.wordpressUsername,
+                    hasWordpressAppPassword: !!settings.wordpressAppPassword
+                }
+            });
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

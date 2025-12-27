@@ -2,7 +2,7 @@ const { z } = require('zod');
 
 const priceSchema = z.union([z.string(), z.number()]).optional().transform(val => (val === '' || val === null || val === undefined) ? undefined : String(val));
 
-const productSchema = z.object({
+const productObject = z.object({
     name: z.string().min(1),
     type: z.enum(['simple', 'variable', 'grouped', 'external']).default('simple'),
     status: z.enum(['draft', 'publish', 'private', 'pending']).default('draft'),
@@ -11,6 +11,8 @@ const productSchema = z.object({
     sku: z.string().optional(),
     regular_price: priceSchema,
     sale_price: priceSchema,
+    date_on_sale_from: z.string().nullable().optional(),
+    date_on_sale_to: z.string().nullable().optional(),
     manage_stock: z.boolean().default(true),
     stock_quantity: z.union([z.string(), z.number(), z.null()]).optional(),
     categories: z.array(z.union([z.object({ id: z.coerce.number() }), z.coerce.number()])).optional(),
@@ -22,7 +24,9 @@ const productSchema = z.object({
         variation: z.boolean().optional(),
         visible: z.boolean().optional(),
     })).optional(),
-}).superRefine((data, ctx) => {
+});
+
+const productSchema = productObject.superRefine((data, ctx) => {
     if (data.status !== 'draft' && data.type !== 'variable') {
         if (!data.regular_price) {
             ctx.addIssue({
@@ -41,6 +45,8 @@ const productSchema = z.object({
     }
 });
 
+const updateProductSchema = productObject.partial();
+
 const variationSchema = z.object({
     regular_price: priceSchema,
     sale_price: priceSchema,
@@ -54,4 +60,6 @@ const variationSchema = z.object({
     })).optional()
 });
 
-module.exports = { productSchema, variationSchema };
+const updateVariationSchema = variationSchema.partial();
+
+module.exports = { productSchema, updateProductSchema, variationSchema, updateVariationSchema };

@@ -69,14 +69,32 @@ const variationController = {
      * Create new variation
      */
     createVariation: async (req, res) => {
+        console.log('🟡 [BACKEND-CONTROLLER] createVariation - STEP 1: Request received');
+        console.log('🟡 [BACKEND-CONTROLLER] Product ID:', req.params.productId);
+        console.log('🟡 [BACKEND-CONTROLLER] Request Body:', JSON.stringify(req.body, null, 2));
+        console.log('🟡 [BACKEND-CONTROLLER] User ID:', req.user?._id);
+
         try {
+            console.log('🟡 [BACKEND-CONTROLLER] createVariation - STEP 2: Calling wooService.createVariation');
+
             const variation = await wooService.createVariation(
                 req.user._id,
                 req.params.productId,
                 req.body
             );
+
+            console.log('🟢 [BACKEND-CONTROLLER] createVariation - STEP 3: Success from wooService');
+            console.log('🟢 [BACKEND-CONTROLLER] Created variation:', JSON.stringify(variation, null, 2));
+
             res.status(201).json(variation);
+
+            console.log('🟢 [BACKEND-CONTROLLER] createVariation - STEP 4: Response sent to client');
         } catch (error) {
+            console.error('🔴 [BACKEND-CONTROLLER] createVariation - ERROR caught');
+            console.error('🔴 [BACKEND-CONTROLLER] Error message:', error.message);
+            console.error('🔴 [BACKEND-CONTROLLER] Error response data:', error.response?.data);
+            console.error('🔴 [BACKEND-CONTROLLER] Error status:', error.response?.status);
+
             if (error.message === 'WooCommerce settings not configured') {
                 return res.status(200).json({
                     success: false,

@@ -5,6 +5,17 @@ const productController = {
         try {
             const { products, totalPages, totalProducts } = await wooService.getProducts(req.user._id, req.query);
 
+            // DEBUG: Log first product to check fields
+            if (products.length > 0) {
+                console.log('[Backend] First Product Sample:', {
+                    id: products[0].id,
+                    name: products[0].name,
+                    price: products[0].price,
+                    price_html: products[0].price_html,
+                    regular_price: products[0].regular_price
+                });
+            }
+
             // Set pagination headers
             res.set('x-wp-total', totalProducts);
             res.set('x-wp-totalpages', totalPages);
@@ -163,13 +174,13 @@ const productController = {
                 // SECURITY: Don't expose full WooCommerce error details to client
                 const status = error.response.status || 500;
                 const errorMessage = error.response.data.message || 'Failed to update product';
-                
+
                 return res.status(status).json({
                     success: false,
                     message: errorMessage,
                     // Only include safe error details, not full response
-                    ...(process.env.NODE_ENV === 'development' && { 
-                        details: error.response.data 
+                    ...(process.env.NODE_ENV === 'development' && {
+                        details: error.response.data
                     })
                 });
             }
@@ -180,8 +191,8 @@ const productController = {
                 success: false,
                 message: error.customMessage || error.message || 'Failed to update product',
                 // SECURITY: Only expose error details in development
-                ...(process.env.NODE_ENV === 'development' && { 
-                    details: error.response?.data 
+                ...(process.env.NODE_ENV === 'development' && {
+                    details: error.response?.data
                 })
             });
         }
@@ -218,6 +229,35 @@ const productController = {
             const result = await wooService.batchProducts(req.user._id, req.body);
             res.json(result);
         } catch (error) {
+            if (error.message === 'WooCommerce settings not configured') {
+                return res.status(200).json({
+                    success: false,
+                    code: 'SETUP_REQUIRED',
+                    message: 'Please configure WooCommerce settings first.'
+                });
+            }
+
+            const status = error.response?.status || 500;
+            res.status(status).json({
+                success: false,
+                message: error.customMessage || error.message,
+                details: error.response?.data
+            });
+        }
+    },
+
+    syncProductPrice: async (req, res) => {
+        try {
+            const productId = req.params.id;
+            console.log(`🔄 [CONTROLLER] Syncing product price for ID: ${productId}`);
+
+            const product = await wooService.syncVariableProductPrice(req.user._id, productId);
+
+            console.log(`✅ [CONTROLLER] Product price synced successfully`);
+            res.json(product);
+        } catch (error) {
+            console.error(`❌ [CONTROLLER] Sync failed:`, error.message);
+
             if (error.message === 'WooCommerce settings not configured') {
                 return res.status(200).json({
                     success: false,

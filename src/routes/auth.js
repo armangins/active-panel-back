@@ -7,10 +7,9 @@ const validate = require('../middleware/validate');
 const { loginSchema, registerSchema } = require('../schemas/auth');
 const router = express.Router();
 
-// More lenient rate limiter for auth check endpoint (used frequently for session validation)
 const authCheckLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 200, // Allow more requests for auth checks (200 per 15 min = ~13 per minute)
+    max: 200,
     standardHeaders: true,
     legacyHeaders: false,
     message: {
@@ -19,8 +18,7 @@ const authCheckLimiter = rateLimit({
     }
 });
 
-// @desc    Auth with Google (Login)
-// @route   GET /api/auth/google
+
 router.get('/google', (req, res, next) => {
     if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
         return res.status(500).json({ error: 'Google Auth Credentials missing in server configuration.' });
@@ -32,8 +30,7 @@ router.get('/google', (req, res, next) => {
     })(req, res, next);
 });
 
-// @desc    Sign up with Google
-// @route   GET /api/auth/google/signup
+
 router.get('/google/signup', (req, res, next) => {
     if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
         return res.status(500).json({ error: 'Google Auth Credentials missing in server configuration.' });
@@ -45,11 +42,9 @@ router.get('/google/signup', (req, res, next) => {
     })(req, res, next);
 });
 
-// @desc    Google auth callback - logs in existing users or auto-creates new users
-// @route   GET /api/auth/google/callback
+
 router.get('/google/callback',
     (req, res, next) => {
-        // Check for OAuth errors in query params (Google sends errors here)
         if (req.query.error) {
             let frontendUrl = process.env.FRONTEND_URL;
             if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
@@ -109,15 +104,13 @@ router.get('/google/callback',
                 return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent(errorMessage)}&code=${encodeURIComponent(errorCode)}`);
             }
 
-            // Successful authentication - log user in
-            // User could be existing user or newly created user
+
             req.logIn(user, (loginErr) => {
                 if (loginErr) {
                     console.error('Login Error:', loginErr);
                     return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to create session. Please try again.')}`);
                 }
 
-                // Ensure session is marked as modified so cookie is set
                 req.session.touch();
 
                 // Log session state before save (production only)
@@ -129,15 +122,12 @@ router.get('/google/callback',
                     });
                 }
 
-                // Explicitly save session to MongoDB before redirect
-                // This ensures the session cookie is set in the response
                 req.session.save((saveErr) => {
                     if (saveErr) {
                         console.error('[OAuth Login] Session save error:', saveErr);
                         return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to save session. Please try again.')}`);
                     }
 
-                    // Log successful login for debugging
                     if (process.env.NODE_ENV === 'production') {
                         console.log('[OAuth Login] Session saved successfully:', {
                             sessionID: req.sessionID,
@@ -151,8 +141,6 @@ router.get('/google/callback',
                         });
                     }
 
-                    // Success - redirect to dashboard after session is saved
-                    // Note: express-session should automatically set the cookie in the redirect response
                     res.redirect(`${frontendUrl}/dashboard`);
                 });
             });
