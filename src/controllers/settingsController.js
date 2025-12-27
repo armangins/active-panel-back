@@ -4,9 +4,10 @@ const encryptionService = require('../config/encryption');
 const settingsController = {
     saveSettings: async (req, res) => {
         try {
-            const { storeUrl, consumerKey, consumerSecret, wordpressUsername, wordpressAppPassword } = req.body;
+            const { storeUrl, woocommerceUrl, consumerKey, consumerSecret, wordpressUsername, wordpressAppPassword } = req.body;
+            const finalStoreUrl = storeUrl || woocommerceUrl;
 
-            if (!storeUrl || !consumerKey || !consumerSecret) {
+            if (!finalStoreUrl || !consumerKey || !consumerSecret) {
                 return res.status(400).json({ error: 'WooCommerce credentials are required' });
             }
 
@@ -21,7 +22,7 @@ const settingsController = {
             let settings = await Settings.findOne({ user: req.user._id });
 
             if (settings) {
-                settings.storeUrl = storeUrl;
+                settings.storeUrl = finalStoreUrl;
                 settings.consumerKey = encryptedKey;
                 settings.consumerSecret = encryptedSecret;
                 settings.wordpressUsername = wordpressUsername || null;
@@ -30,7 +31,7 @@ const settingsController = {
             } else {
                 await Settings.create({
                     user: req.user._id,
-                    storeUrl,
+                    storeUrl: finalStoreUrl,
                     consumerKey: encryptedKey,
                     consumerSecret: encryptedSecret,
                     wordpressUsername: wordpressUsername || null,
