@@ -146,6 +146,7 @@ router.post('/login', loginLimiter, validate(loginSchema), async (req, res) => {
                 email: user.email,
                 displayName: user.displayName,
                 role: user.role || 'user',
+                picture: user.image,
                 onboardingCompleted: user.onboardingCompleted || false
             }
         });
@@ -304,6 +305,7 @@ router.get('/me', authCheckLimiter, ensureAuth, (req, res) => {
             email: req.user.email,
             displayName: req.user.displayName,
             role: req.user.role || 'user',
+            picture: req.user.image,
             onboardingCompleted: req.user.onboardingCompleted || false,
             onboardingCompletedAt: req.user.onboardingCompletedAt || null
         }

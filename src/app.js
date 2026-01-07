@@ -93,6 +93,10 @@ app.use('/api/auth', authJwtRoutes);
 // These will be merged into auth-jwt.js later
 app.use('/api/auth-legacy', authRoutes);
 
+// Debug Route (Public, No Auth)
+const debugController = require('./controllers/debugController');
+app.get('/debug/categories-with-count', debugController.getCategoriesWithCount);
+
 // Mount Protected Routes
 app.use('/api', ensureAuth, apiRoutes);
 app.use('/api', ensureAuth, settingsRoutes);

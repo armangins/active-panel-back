@@ -4,6 +4,8 @@ const categoryController = {
     getAllCategories: async (req, res) => {
         try {
             const { data, total, totalPages } = await wooService.getCategories(req.user._id, req.query);
+            
+            
             res.set('x-wp-total', total);
             res.set('x-wp-totalpages', totalPages);
             res.json(data);

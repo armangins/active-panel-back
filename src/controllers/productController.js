@@ -5,17 +5,6 @@ const productController = {
         try {
             const { products, totalPages, totalProducts } = await wooService.getProducts(req.user._id, req.query);
 
-            // DEBUG: Log first product to check fields
-            if (products.length > 0) {
-                console.log('[Backend] First Product Sample:', {
-                    id: products[0].id,
-                    name: products[0].name,
-                    price: products[0].price,
-                    price_html: products[0].price_html,
-                    regular_price: products[0].regular_price
-                });
-            }
-
             // Set pagination headers
             res.set('x-wp-total', totalProducts);
             res.set('x-wp-totalpages', totalPages);

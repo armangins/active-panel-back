@@ -147,11 +147,7 @@ const wooService = {
         });
         const api = await getApi(userId);
         const response = await api.post("products", prepareData);
-        console.log('✅ [CREATE] WooCommerce response:', {
-            id: response.data.id,
-            date_on_sale_from: response.data.date_on_sale_from,
-            date_on_sale_to: response.data.date_on_sale_to
-        });
+
         return response.data;
     },
 
@@ -163,11 +159,7 @@ const wooService = {
         });
         const api = await getApi(userId);
         const response = await api.put(`products/${productId}`, prepareData);
-        console.log('✅ [UPDATE] WooCommerce response:', {
-            id: response.data.id,
-            date_on_sale_from: response.data.date_on_sale_from,
-            date_on_sale_to: response.data.date_on_sale_to
-        });
+
         return response.data;
     },
 
@@ -317,7 +309,83 @@ const wooService = {
     getCustomers: async (userId, params = {}) => {
         const api = await getApi(userId);
         const response = await api.get("customers", params);
-        return response.data;
+        
+        // Enrich each customer with completed orders count
+        const customersWithCompletedOrders = await Promise.all(
+            response.data.map(async (customer) => {
+                try {
+                    // Query orders for this customer with status=completed
+                    const ordersResponse = await api.get("orders", {
+                        customer: customer.id,
+                        status: 'completed',
+                        per_page: 1 // We only need the count, not the data
+                    });
+                    
+                    // Extract total from headers
+                    const completedOrdersCount = parseInt(ordersResponse.headers['x-wp-total'] || 0, 10);
+                    
+                    // Calculate average purchase
+                    const totalSpent = customer.total_spent ? parseFloat(customer.total_spent) : 0;
+                    const avgPurchase = completedOrdersCount > 0 && totalSpent > 0
+                        ? (totalSpent / completedOrdersCount).toFixed(2)
+                        : '0.00';
+                    
+
+                    
+                    return {
+                        ...customer,
+                        completed_orders_count: completedOrdersCount,
+                        avg_purchase: avgPurchase
+                    };
+                } catch (error) {
+                    console.error(`Error fetching completed orders for customer ${customer.id}:`, error.message);
+                    // Return customer with 0 completed orders on error
+                    return {
+                        ...customer,
+                        completed_orders_count: 0,
+                        avg_purchase: '0.00'
+                    };
+                }
+            })
+        );
+        
+        return customersWithCompletedOrders;
+    },
+
+    getCustomer: async (userId, customerId) => {
+        const api = await getApi(userId);
+        const response = await api.get(`customers/${customerId}`);
+        
+        try {
+            // Query orders for this customer with status=completed
+            const ordersResponse = await api.get("orders", {
+                customer: customerId,
+                status: 'completed',
+                per_page: 1 // We only need the count, not the data
+            });
+            
+            // Extract total from headers
+            const completedOrdersCount = parseInt(ordersResponse.headers['x-wp-total'] || 0, 10);
+            
+            // Calculate average purchase
+            const avgPurchase = completedOrdersCount > 0 && response.data.total_spent
+                ? (parseFloat(response.data.total_spent) / completedOrdersCount).toFixed(2)
+                : '0.00';
+            
+            return {
+                ...response.data,
+                completed_orders_count: completedOrdersCount,
+                avg_purchase: avgPurchase
+            };
+        } catch (error) {
+            console.error(`Error fetching completed orders for customer ${customerId}:`, error.message);
+            // Return customer with 0 completed orders on error
+            return {
+                ...response.data,
+                completed_orders_count: 0,
+                avg_purchase: '0.00'
+            };
+        }
     },
 
     // ============================================
@@ -375,11 +443,70 @@ const wooService = {
     // ============================================
 
     getCategories: async (userId, params = {}) => {
+
+        
         const api = await getApi(userId);
-        const response = await api.get("products/categories", params);
+        
+        // Force 'count' field to ensure we can fetch/return it.
+        // If _fields is missing, we define a robust default list.
+        const requestParams = { 
+            ...params,
+            _fields: params._fields 
+                ? params._fields + ',count' 
+                : 'id,name,slug,description,image,parent,count,display,menu_order'
+        };
+
+        const response = await api.get("products/categories", requestParams);
         const pagination = extractPagination(response);
+        
+        console.log('🔍 [WooService] Got response from WooCommerce:', {
+            categoryCount: response.data?.length || 0,
+            firstCategory: response.data?.[0],
+            hasCount: response.data?.[0] ? ('count' in response.data[0]) : false
+        });
+        
+        // If count field is missing, fetch it for each category
+
+        
+        const categoriesWithCount = await Promise.all(
+            response.data.map(async (category) => {
+                // If count already exists and is a valid number, use it
+                // We strictly check for type 'number' because sometimes it comes as undefined/null
+                if (typeof category.count === 'number') {
+                    return { ...category, product_count: category.count };
+                }
+                
+
+                
+                try {
+                    // Fetch products for this category to get the count
+                    const productsResponse = await api.get("products", {
+                        category: category.id,
+                        per_page: 1,
+                        page: 1
+                    });
+                    
+                    const count = parseInt(productsResponse.headers['x-wp-total'] || 0, 10);
+
+                    
+                    return {
+                        ...category,
+                        count: count
+                    };
+                } catch (error) {
+                    console.error(`❌ Error fetching count for category ${category.id}:`, error.message);
+                    return {
+                        ...category,
+                        count: 0
+                    };
+                }
+            })
+        );
+        
+
+        
         return {
-            data: response.data,
+            data: categoriesWithCount,
             total: pagination.total,
             totalPages: pagination.totalPages
         };

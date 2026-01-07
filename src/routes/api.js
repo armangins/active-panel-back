@@ -9,6 +9,7 @@ const variationController = require('../controllers/variationController');
 const categoryController = require('../controllers/categoryController');
 const attributeController = require('../controllers/attributeController');
 const couponController = require('../controllers/couponController');
+const debugController = require('../controllers/debugController');
 const { ensureAuth } = require('../middleware/auth');
 const multer = require('multer');
 const {
@@ -51,10 +52,27 @@ const uploadMiddleware = (req, res, next) => {
     });
 };
 
+const noCacheMiddleware = (req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    res.set('ETag', ''); // Disable ETag to prevent 304 responses
+    req.headers['if-none-match'] = ''; // Clear client's ETag
+    req.headers['if-modified-since'] = ''; // Clear modification check
+    next();
+};
+
 // Apply general rate limiting to all API routes
 router.use(apiLimiter);
 
 // Product Routes
+
+// Category Routes (Must be before /products/:id to avoid conflict)
+router.get('/products/categories', ensureAuth, noCacheMiddleware, categoryController.getAllCategories);
+router.get('/products/categories/:id', ensureAuth, categoryController.getCategoryById);
+router.post('/products/categories', ensureAuth, mutationLimiter, validate(categorySchema), categoryController.createCategory);
+router.put('/products/categories/:id', ensureAuth, mutationLimiter, validate(categorySchema), categoryController.updateCategory);
+router.delete('/products/categories/:id', ensureAuth, categoryController.deleteCategory);
 
 // Attribute Routes (Must be before /products/:id)
 router.get('/products/attributes', ensureAuth, attributeController.getAllAttributes);
@@ -126,16 +144,15 @@ router.delete('/orders/:id',
 
 // Customer Routes
 router.get('/customers', ensureAuth, customerController.getAllCustomers);
+router.get('/customers/:id', ensureAuth, customerController.getCustomerById);
+
 
 // Media Routes
 router.post('/media', ensureAuth, upload.single('file'), mediaController.uploadMedia);
 
-// Category Routes
-router.get('/products/categories', ensureAuth, categoryController.getAllCategories);
-router.get('/products/categories/:id', ensureAuth, categoryController.getCategoryById);
-router.post('/products/categories', ensureAuth, mutationLimiter, validate(categorySchema), categoryController.createCategory);
-router.put('/products/categories/:id', ensureAuth, mutationLimiter, validate(categorySchema), categoryController.updateCategory);
-router.delete('/products/categories/:id', ensureAuth, categoryController.deleteCategory);
+// Category Routes (with no-cache for debugging)
+
+
 
 // Coupon Routes
 router.get('/coupons', ensureAuth, couponController.getAllCoupons);
@@ -143,5 +160,7 @@ router.get('/coupons/:id', ensureAuth, couponController.getCouponById);
 router.post('/coupons', ensureAuth, mutationLimiter, validate(couponSchema), couponController.createCoupon);
 router.put('/coupons/:id', ensureAuth, mutationLimiter, validate(couponSchema), couponController.updateCoupon);
 router.delete('/coupons/:id', ensureAuth, couponController.deleteCoupon);
+
+// Debug Route
 
 module.exports = router;

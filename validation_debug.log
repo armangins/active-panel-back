@@ -1108,3 +1108,132 @@ Request Body: {
   "images": []
 }
 
+[2026-01-07T15:35:16.796Z] Validation Error: [
+  {
+    "expected": "number",
+    "code": "invalid_type",
+    "received": "NaN",
+    "path": [
+      "images",
+      2,
+      "id"
+    ],
+    "message": "Invalid input: expected number, received NaN"
+  }
+]
+Request Body: {
+  "name": "מוצר חדש",
+  "type": "simple",
+  "status": "publish",
+  "regular_price": "123",
+  "sale_price": "86.10",
+  "description": ";ס;סזס;ז",
+  "short_description": "דדג",
+  "sku": "SKU-62XE947A",
+  "manage_stock": true,
+  "stock_quantity": 1,
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [
+    {
+      "id": 55979
+    },
+    {
+      "id": 55980
+    },
+    {}
+  ],
+  "date_on_sale_from": null,
+  "date_on_sale_to": null
+}
+
+[2026-01-07T15:35:20.143Z] Validation Error: [
+  {
+    "expected": "number",
+    "code": "invalid_type",
+    "received": "NaN",
+    "path": [
+      "images",
+      2,
+      "id"
+    ],
+    "message": "Invalid input: expected number, received NaN"
+  }
+]
+Request Body: {
+  "name": "מוצר חדש",
+  "type": "simple",
+  "status": "publish",
+  "regular_price": "123",
+  "sale_price": "86.10",
+  "description": ";ס;סזס;ז",
+  "short_description": "דדג",
+  "sku": "SKU-62XE947A",
+  "manage_stock": true,
+  "stock_quantity": 1,
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [
+    {
+      "id": 55979
+    },
+    {
+      "id": 55980
+    },
+    {}
+  ],
+  "date_on_sale_from": null,
+  "date_on_sale_to": null
+}
+
+[2026-01-07T15:35:21.132Z] Validation Error: [
+  {
+    "expected": "number",
+    "code": "invalid_type",
+    "received": "NaN",
+    "path": [
+      "images",
+      2,
+      "id"
+    ],
+    "message": "Invalid input: expected number, received NaN"
+  }
+]
+Request Body: {
+  "name": "מוצר חדש",
+  "type": "simple",
+  "status": "publish",
+  "regular_price": "123",
+  "sale_price": "86.10",
+  "description": ";ס;סזס;ז",
+  "short_description": "דדג",
+  "sku": "SKU-62XE947A",
+  "manage_stock": true,
+  "stock_quantity": 1,
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [
+    {
+      "id": 55979
+    },
+    {
+      "id": 55980
+    },
+    {}
+  ],
+  "date_on_sale_from": null,
+  "date_on_sale_to": null
+}
+
