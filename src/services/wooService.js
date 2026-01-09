@@ -1,12 +1,15 @@
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
 const axios = require('axios');
 const FormData = require('form-data');
+const NodeCache = require('node-cache');
 const Settings = require('../models/Settings');
 const encryptionService = require('../config/encryption');
 
 // In-memory cache for API instances and settings
 const apiCache = new Map();
 const settingsCache = new Map();
+// Cache for product data (TTL: 5 minutes)
+const productCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
 
 /**
  * Sanitize string to prevent XSS and remove HTML tags
@@ -106,17 +109,25 @@ const getApi = async (userId) => {
 
 const wooService = {
     getProducts: async (userId, params = {}) => {
+        // Cache Key covering User and Query Params
+        const cacheKey = `products_${userId}_${JSON.stringify(params)}`;
+        const cachedData = productCache.get(cacheKey);
+
+        if (cachedData) {
+            return cachedData;
+        }
+
         const api = await getApi(userId);
 
         const optimizedParams = {
             ...params,
-            _fields: params._fields || 'id,name,type,status,description,short_description,stock_status,stock_quantity,price,regular_price,sale_price,price_html,images,categories,sku'
+            _fields: params._fields || 'id,name,type,status,description,short_description,stock_status,stock_quantity,price,regular_price,sale_price,price_html,images,categories,sku,date_on_sale_from,date_on_sale_to,on_sale,permalink'
         };
 
         const response = await api.get("products", optimizedParams);
         const pagination = extractPagination(response);
 
-        return {
+        const result = {
             products: response.data.map(product => ({
                 ...product,
                 variations: product.type === 'variable' ? [] : undefined
@@ -124,6 +135,10 @@ const wooService = {
             totalPages: pagination.totalPages,
             totalProducts: pagination.total
         };
+
+        // Store in cache
+        productCache.set(cacheKey, result);
+        return result;
     },
 
     getProduct: async (userId, id) => {
@@ -131,7 +146,7 @@ const wooService = {
             const api = await getApi(userId);
             // SECURITY & ACCURACY: Only request regular_price, not price field (price may include tax)
             const response = await api.get(`products/${id}`, {
-                _fields: 'id,name,type,status,description,short_description,sku,price,regular_price,sale_price,price_html,stock_quantity,stock_status,manage_stock,categories,images,attributes,tags,virtual,weight,dimensions,shipping_class,tax_status,tax_class,date_on_sale_from,date_on_sale_to'
+                _fields: 'id,name,type,status,description,short_description,sku,price,regular_price,sale_price,price_html,stock_quantity,stock_status,manage_stock,categories,images,attributes,tags,virtual,weight,dimensions,shipping_class,tax_status,tax_class,date_on_sale_from,date_on_sale_to,permalink'
             });
             return response.data;
         } catch (error) {
@@ -140,6 +155,7 @@ const wooService = {
     },
 
     createProduct: async (userId, data) => {
+        productCache.flushAll(); // Invalidate cache
         const prepareData = prepareProductData(data);
         console.log('🔍 [CREATE] Scheduled pricing data:', {
             date_on_sale_from: prepareData.date_on_sale_from,
@@ -152,6 +168,7 @@ const wooService = {
     },
 
     updateProduct: async (userId, productId, data) => {
+        productCache.flushAll(); // Invalidate cache
         const prepareData = prepareProductData(data);
         console.log('🔍 [UPDATE] Scheduled pricing data:', {
             date_on_sale_from: prepareData.date_on_sale_from,
@@ -165,6 +182,7 @@ const wooService = {
 
     deleteProduct: async (userId, productId) => {
         try {
+            productCache.flushAll(); // Invalidate cache
             const api = await getApi(userId);
             // force: true is required to permanently delete instead of moving to trash
             const response = await api.delete(`products/${productId}`, { force: true });
@@ -174,7 +192,26 @@ const wooService = {
         }
     },
 
+    updateStock: async (userId, productId, quantity, status) => {
+        productCache.flushAll(); // Invalidate cache
+        try {
+            const api = await getApi(userId);
+            const data = {
+                manage_stock: true,
+                stock_quantity: quantity
+            };
+            if (status) {
+                data.stock_status = status;
+            }
+            const response = await api.put(`products/${productId}`, data);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    },
+
     batchProducts: async (userId, data) => {
+        productCache.flushAll(); // Invalidate cache
         const api = await getApi(userId);
         const response = await api.post('products/batch', data);
         return response.data;
@@ -413,29 +450,70 @@ const wooService = {
     },
 
     createVariation: async (userId, productId, data) => {
-        const api = await getApi(userId);
-        const response = await api.post(`products/${productId}/variations`, data);
-        return response.data;
+        productCache.flushAll(); // Invalidate cache - price range might change
+        try {
+            const api = await getApi(userId);
+            const response = await api.post(`products/${productId}/variations`, data);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     },
 
     updateVariation: async (userId, productId, variationId, data) => {
-        const api = await getApi(userId);
-        const response = await api.put(`products/${productId}/variations/${variationId}`, data);
-        return response.data;
+        productCache.flushAll(); // Invalidate cache
+        try {
+            const api = await getApi(userId);
+            const response = await api.put(`products/${productId}/variations/${variationId}`, data);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     },
 
     deleteVariation: async (userId, productId, variationId) => {
-        const api = await getApi(userId);
-        const response = await api.delete(`products/${productId}/variations/${variationId}`, {
-            force: true
-        });
-        return response.data;
+        productCache.flushAll(); // Invalidate cache
+        try {
+            const api = await getApi(userId);
+            const response = await api.delete(`products/${productId}/variations/${variationId}`, {
+                force: true
+            });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     },
 
     batchVariations: async (userId, productId, data) => {
-        const api = await getApi(userId);
-        const response = await api.post(`products/${productId}/variations/batch`, data);
-        return response.data;
+        productCache.flushAll(); // Invalidate cache - prices/stock might change
+        
+        console.log('🔵 [BATCH-VARIATIONS] ========== START ==========');
+        console.log('🔵 [BATCH-VARIATIONS] Product ID:', productId);
+        console.log('🔵 [BATCH-VARIATIONS] User ID:', userId);
+        console.log('🔵 [BATCH-VARIATIONS] Input Data:', JSON.stringify(data, null, 2));
+        
+        try {
+            const api = await getApi(userId);
+            
+            console.log('🔵 [BATCH-VARIATIONS] Sending to WooCommerce API...');
+            console.log('🔵 [BATCH-VARIATIONS] Endpoint:', `products/${productId}/variations/batch`);
+            
+            const response = await api.post(`products/${productId}/variations/batch`, data);
+            
+            console.log('🟢 [BATCH-VARIATIONS] SUCCESS - WooCommerce Response:');
+            console.log('🟢 [BATCH-VARIATIONS] Status:', response.status || 'N/A');
+            console.log('🟢 [BATCH-VARIATIONS] Response Data:', JSON.stringify(response.data, null, 2));
+            console.log('🟢 [BATCH-VARIATIONS] ========== END ==========');
+            
+            return response.data;
+        } catch (error) {
+            console.error('🔴 [BATCH-VARIATIONS] ERROR occurred!');
+            console.error('🔴 [BATCH-VARIATIONS] Error Message:', error.message);
+            console.error('🔴 [BATCH-VARIATIONS] Error Response Status:', error.response?.status);
+            console.error('🔴 [BATCH-VARIATIONS] Error Response Data:', JSON.stringify(error.response?.data, null, 2));
+            console.error('🔴 [BATCH-VARIATIONS] ========== END (ERROR) ==========');
+            throw error;
+        }
     },
 
     // ============================================
@@ -605,6 +683,31 @@ const wooService = {
         } else {
             apiCache.clear();
             settingsCache.clear();
+        }
+    },
+
+    warmCache: async () => {
+        console.log('🔥 [CACHE] Warming up started...');
+        try {
+             // 10 second delay to allow DB to fully stabilize and other services to boot
+             setTimeout(async () => {
+                 const allSettings = await Settings.find({});
+                 console.log(`🔥 [CACHE] Found ${allSettings.stores || allSettings.length} stores to warm up`);
+                 
+                 for (const setting of allSettings) {
+                     if (!setting.user) continue;
+                     try {
+                         // Fetch page 1 of products
+                         console.log(`🔥 [CACHE] Warming for user ${setting.user}`);
+                         await wooService.getProducts(setting.user, { per_page: 24, page: 1 });
+                     } catch (err) {
+                         console.error(`❌ [CACHE] Failed to warm for user ${setting.user}:`, err.message);
+                     }
+                 }
+                 console.log('✅ [CACHE] Warm up complete');
+             }, 10000);
+        } catch (e) {
+             console.error('Cache warm up failed', e);
         }
     }
 };

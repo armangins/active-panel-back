@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const compression = require('compression');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
@@ -32,6 +33,7 @@ if (process.env.NODE_ENV === 'production') {
 
 // Security Middleware
 app.use(helmet());
+app.use(compression());
 app.use(cors({
     origin: frontendUrl,
     credentials: true,
@@ -103,12 +105,22 @@ app.use('/api', ensureAuth, settingsRoutes);
 
 const PORT = process.env.PORT || 3000;
 const connectDB = require('./config/database');
+const wooService = require('./services/wooService');
 const { startCleanupJob } = require('./jobs/tokenCleanup');
+const socketConfig = require('./config/socket');
+const http = require('http');
+
+// Create HTTP Server
+const server = http.createServer(app);
+
+// Initialize Socket.io
+const io = socketConfig.init(server);
 
 if (require.main === module) {
     // Connect to Database then start server
     connectDB().then(() => {
-        app.listen(PORT, () => {
+        // Use server.listen instead of app.listen to support WebSockets
+        server.listen(PORT, () => {
             if (process.env.NODE_ENV === 'development') {
                 console.log(`Server running on port ${PORT}`);
             }
@@ -117,6 +129,12 @@ if (require.main === module) {
             startCleanupJob();
             console.log('✅ JWT Authentication enabled');
             console.log('✅ Token cleanup job started');
+            
+            // Start background jobs
+            require('./jobs/orderPoller');
+            console.log('✅ Order poller service started');
+            
+            wooService.warmCache(); // Start cache warming
         });
     });
 }
@@ -131,5 +149,4 @@ app.use((err, req, res, next) => {
     });
 });
 
-module.exports = app;
-
+module.exports = { app, server };

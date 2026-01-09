@@ -1237,3 +1237,1479 @@ Request Body: {
   "date_on_sale_to": null
 }
 
+[2026-01-09T10:38:18.247Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>גדשגשד</p>",
+  "short_description": "<p>דגדשגש</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": 430,
+  "sale_price": 40,
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "name": "זאת קטגוריה חדשה"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock",
+  "variations": [
+    {
+      "id": 56011,
+      "sku": "SKU-3R15GFZL",
+      "regular_price": "100",
+      "sale_price": "",
+      "manage_stock": true,
+      "stock_quantity": 12,
+      "stock_status": "instock",
+      "image": {
+        "id": 56006,
+        "date_created": "2026-01-09T09:10:00",
+        "date_created_gmt": "2026-01-09T09:10:00",
+        "date_modified": "2026-01-09T09:10:00",
+        "date_modified_gmt": "2026-01-09T09:10:00",
+        "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_r2ulepr2ulepr2ul-scaled.webp",
+        "name": "Gemini_Generated_Image_r2ulepr2ulepr2ul",
+        "alt": ""
+      },
+      "attributes": [
+        {
+          "id": 1,
+          "name": "צבע",
+          "slug": "pa_colors",
+          "option": "Green"
+        },
+        {
+          "id": 4,
+          "name": "אורך צמיד",
+          "slug": "pa_length",
+          "option": "18 ס״מ"
+        }
+      ],
+      "name": "Green, 18 ס״מ"
+    },
+    {
+      "id": 56010,
+      "sku": "SKU-3R15GFZL",
+      "regular_price": "100",
+      "sale_price": "",
+      "manage_stock": true,
+      "stock_quantity": 12,
+      "stock_status": "instock",
+      "image": {
+        "id": 56005,
+        "date_created": "2026-01-09T09:10:00",
+        "date_created_gmt": "2026-01-09T09:10:00",
+        "date_modified": "2026-01-09T09:10:00",
+        "date_modified_gmt": "2026-01-09T09:10:00",
+        "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_atvt9datvt9datvt.webp",
+        "name": "Gemini_Generated_Image_atvt9datvt9datvt",
+        "alt": ""
+      },
+      "attributes": [
+        {
+          "id": 1,
+          "name": "צבע",
+          "slug": "pa_colors",
+          "option": "Red"
+        },
+        {
+          "id": 4,
+          "name": "אורך צמיד",
+          "slug": "pa_length",
+          "option": "17 ס״מ"
+        }
+      ],
+      "name": "Red, 17 ס״מ"
+    },
+    {
+      "id": 56009,
+      "sku": "SKU-3R15GFZL",
+      "regular_price": "100",
+      "sale_price": "",
+      "manage_stock": true,
+      "stock_quantity": 12,
+      "stock_status": "instock",
+      "image": {
+        "id": 56004,
+        "date_created": "2026-01-09T09:10:00",
+        "date_created_gmt": "2026-01-09T09:10:00",
+        "date_modified": "2026-01-09T09:10:00",
+        "date_modified_gmt": "2026-01-09T09:10:00",
+        "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-11.webp",
+        "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+        "alt": ""
+      },
+      "attributes": [
+        {
+          "id": 1,
+          "name": "צבע",
+          "slug": "pa_colors",
+          "option": "Red"
+        },
+        {
+          "id": 4,
+          "name": "אורך צמיד",
+          "slug": "pa_length",
+          "option": "18 ס״מ"
+        }
+      ],
+      "name": "Red, 18 ס״מ"
+    }
+  ]
+}
+
+[2026-01-09T10:38:23.821Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>גדשגשד</p>",
+  "short_description": "<p>דגדשגש</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": 430,
+  "sale_price": 40,
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "name": "זאת קטגוריה חדשה"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock",
+  "variations": [
+    {
+      "id": 56011,
+      "sku": "SKU-3R15GFZL",
+      "regular_price": "100",
+      "sale_price": "",
+      "manage_stock": true,
+      "stock_quantity": 12,
+      "stock_status": "instock",
+      "image": {
+        "id": 56006,
+        "date_created": "2026-01-09T09:10:00",
+        "date_created_gmt": "2026-01-09T09:10:00",
+        "date_modified": "2026-01-09T09:10:00",
+        "date_modified_gmt": "2026-01-09T09:10:00",
+        "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_r2ulepr2ulepr2ul-scaled.webp",
+        "name": "Gemini_Generated_Image_r2ulepr2ulepr2ul",
+        "alt": ""
+      },
+      "attributes": [
+        {
+          "id": 1,
+          "name": "צבע",
+          "slug": "pa_colors",
+          "option": "Green"
+        },
+        {
+          "id": 4,
+          "name": "אורך צמיד",
+          "slug": "pa_length",
+          "option": "18 ס״מ"
+        }
+      ],
+      "name": "Green, 18 ס״מ"
+    },
+    {
+      "id": 56010,
+      "sku": "SKU-3R15GFZL",
+      "regular_price": "100",
+      "sale_price": "",
+      "manage_stock": true,
+      "stock_quantity": 12,
+      "stock_status": "instock",
+      "image": {
+        "id": 56005,
+        "date_created": "2026-01-09T09:10:00",
+        "date_created_gmt": "2026-01-09T09:10:00",
+        "date_modified": "2026-01-09T09:10:00",
+        "date_modified_gmt": "2026-01-09T09:10:00",
+        "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_atvt9datvt9datvt.webp",
+        "name": "Gemini_Generated_Image_atvt9datvt9datvt",
+        "alt": ""
+      },
+      "attributes": [
+        {
+          "id": 1,
+          "name": "צבע",
+          "slug": "pa_colors",
+          "option": "Red"
+        },
+        {
+          "id": 4,
+          "name": "אורך צמיד",
+          "slug": "pa_length",
+          "option": "17 ס״מ"
+        }
+      ],
+      "name": "Red, 17 ס״מ"
+    },
+    {
+      "id": 56009,
+      "sku": "SKU-3R15GFZL",
+      "regular_price": "100",
+      "sale_price": "",
+      "manage_stock": true,
+      "stock_quantity": 12,
+      "stock_status": "instock",
+      "image": {
+        "id": 56004,
+        "date_created": "2026-01-09T09:10:00",
+        "date_created_gmt": "2026-01-09T09:10:00",
+        "date_modified": "2026-01-09T09:10:00",
+        "date_modified_gmt": "2026-01-09T09:10:00",
+        "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-11.webp",
+        "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+        "alt": ""
+      },
+      "attributes": [
+        {
+          "id": 1,
+          "name": "צבע",
+          "slug": "pa_colors",
+          "option": "Red"
+        },
+        {
+          "id": 4,
+          "name": "אורך צמיד",
+          "slug": "pa_length",
+          "option": "18 ס״מ"
+        }
+      ],
+      "name": "Red, 18 ס״מ"
+    }
+  ]
+}
+
+[2026-01-09T10:38:34.130Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>גדשגשד</p>",
+  "short_description": "<p>דגדשגש</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": 430,
+  "sale_price": 40,
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "name": "זאת קטגוריה חדשה"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock",
+  "variations": [
+    {
+      "id": 56011,
+      "sku": "SKU-3R15GFZL",
+      "regular_price": "100",
+      "sale_price": "",
+      "manage_stock": true,
+      "stock_quantity": 12,
+      "stock_status": "instock",
+      "image": {
+        "id": 56006,
+        "date_created": "2026-01-09T09:10:00",
+        "date_created_gmt": "2026-01-09T09:10:00",
+        "date_modified": "2026-01-09T09:10:00",
+        "date_modified_gmt": "2026-01-09T09:10:00",
+        "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_r2ulepr2ulepr2ul-scaled.webp",
+        "name": "Gemini_Generated_Image_r2ulepr2ulepr2ul",
+        "alt": ""
+      },
+      "attributes": [
+        {
+          "id": 1,
+          "name": "צבע",
+          "slug": "pa_colors",
+          "option": "Green"
+        },
+        {
+          "id": 4,
+          "name": "אורך צמיד",
+          "slug": "pa_length",
+          "option": "18 ס״מ"
+        }
+      ],
+      "name": "Green, 18 ס״מ"
+    },
+    {
+      "id": 56010,
+      "sku": "SKU-3R15GFZL",
+      "regular_price": "100",
+      "sale_price": "",
+      "manage_stock": true,
+      "stock_quantity": 12,
+      "stock_status": "instock",
+      "image": {
+        "id": 56005,
+        "date_created": "2026-01-09T09:10:00",
+        "date_created_gmt": "2026-01-09T09:10:00",
+        "date_modified": "2026-01-09T09:10:00",
+        "date_modified_gmt": "2026-01-09T09:10:00",
+        "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_atvt9datvt9datvt.webp",
+        "name": "Gemini_Generated_Image_atvt9datvt9datvt",
+        "alt": ""
+      },
+      "attributes": [
+        {
+          "id": 1,
+          "name": "צבע",
+          "slug": "pa_colors",
+          "option": "Red"
+        },
+        {
+          "id": 4,
+          "name": "אורך צמיד",
+          "slug": "pa_length",
+          "option": "17 ס״מ"
+        }
+      ],
+      "name": "Red, 17 ס״מ"
+    },
+    {
+      "id": 56009,
+      "sku": "SKU-3R15GFZL",
+      "regular_price": "100",
+      "sale_price": "",
+      "manage_stock": true,
+      "stock_quantity": 12,
+      "stock_status": "instock",
+      "image": {
+        "id": 56004,
+        "date_created": "2026-01-09T09:10:00",
+        "date_created_gmt": "2026-01-09T09:10:00",
+        "date_modified": "2026-01-09T09:10:00",
+        "date_modified_gmt": "2026-01-09T09:10:00",
+        "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-11.webp",
+        "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+        "alt": ""
+      },
+      "attributes": [
+        {
+          "id": 1,
+          "name": "צבע",
+          "slug": "pa_colors",
+          "option": "Red"
+        },
+        {
+          "id": 4,
+          "name": "אורך צמיד",
+          "slug": "pa_length",
+          "option": "18 ס״מ"
+        }
+      ],
+      "name": "Red, 18 ס״מ"
+    }
+  ]
+}
+
+[2026-01-09T16:03:36.220Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": "",
+  "sale_price": "",
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "name": "New Arrivals"
+    },
+    {
+      "name": "קטגוריה חדשה"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock"
+}
+
+[2026-01-09T16:03:40.879Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": "",
+  "sale_price": "",
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "name": "New Arrivals"
+    },
+    {
+      "name": "קטגוריה חדשה"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock"
+}
+
+[2026-01-09T16:03:50.053Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": "",
+  "sale_price": "",
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "name": "New Arrivals"
+    },
+    {
+      "name": "קטגוריה חדשה"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock"
+}
+
+[2026-01-09T16:07:53.638Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": "",
+  "sale_price": "",
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "name": "New Arrivals"
+    },
+    {
+      "name": "SALE"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock"
+}
+
+[2026-01-09T16:08:01.335Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": "",
+  "sale_price": "",
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "name": "New Arrivals"
+    },
+    {
+      "name": "SALE"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock"
+}
+
+[2026-01-09T16:10:11.858Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": "",
+  "sale_price": "",
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "name": "New Arrivals"
+    },
+    {
+      "name": "SALE"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock"
+}
+
+[2026-01-09T16:10:22.417Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": "",
+  "sale_price": "",
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "name": "New Arrivals"
+    },
+    {
+      "name": "SALE"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock"
+}
+
+[2026-01-09T16:12:28.361Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": "",
+  "sale_price": "",
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "name": "New Arrivals"
+    },
+    {
+      "name": "SALE"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock"
+}
+
+[2026-01-09T16:15:34.998Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      0
+    ],
+    "message": "Invalid input"
+  },
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [
+            "id"
+          ],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "received": "NaN",
+          "path": [],
+          "message": "Invalid input: expected number, received NaN"
+        }
+      ]
+    ],
+    "path": [
+      "categories",
+      1
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "arman",
+  "type": "variable",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "100",
+  "regular_price": "",
+  "sale_price": "",
+  "images": [
+    {
+      "id": 56003,
+      "date_created": "2026-01-09T09:09:09",
+      "date_created_gmt": "2026-01-09T09:09:09",
+      "date_modified": "2026-01-09T09:11:14",
+      "date_modified_gmt": "2026-01-09T09:11:14",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10.webp",
+      "name": "Gemini_Generated_Image_2to8u12to8u12to8",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_2to8u12to8u12to8-10-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "name": "New Arrivals"
+    },
+    {
+      "name": "SALE"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": false,
+  "price_html": "<span class=\"woocommerce-Price-amount amount\"><bdi>100.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span>",
+  "stock_status": "instock"
+}
+

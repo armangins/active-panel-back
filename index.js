@@ -3,14 +3,14 @@
  * This file starts the Express server
  */
 
-const app = require('./src/app');
+const { app, server } = require('./src/app');
 const connectDB = require('./src/config/database');
 const PORT = process.env.PORT || 3000;
 
 // Connect to Database then start server
 connectDB()
   .then(() => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   })
@@ -18,4 +18,3 @@ connectDB()
     console.error('Failed to connect to database:', error);
     process.exit(1);
   });
-

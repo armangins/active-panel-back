@@ -25,6 +25,16 @@ const { productSchema, variationSchema, updateProductSchema, updateVariationSche
 const { categorySchema } = require('../schemas/category');
 const { couponSchema } = require('../schemas/coupon');
 
+const noCacheMiddleware = (req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    res.set('ETag', ''); // Disable ETag to prevent 304 responses
+    req.headers['if-none-match'] = ''; // Clear client's ETag
+    req.headers['if-modified-since'] = ''; // Clear modification check
+    next();
+};
+
 const upload = multer({
     storage: multer.memoryStorage(),
     limits: {
@@ -52,15 +62,7 @@ const uploadMiddleware = (req, res, next) => {
     });
 };
 
-const noCacheMiddleware = (req, res, next) => {
-    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
-    res.set('Pragma', 'no-cache');
-    res.set('Expires', '0');
-    res.set('ETag', ''); // Disable ETag to prevent 304 responses
-    req.headers['if-none-match'] = ''; // Clear client's ETag
-    req.headers['if-modified-since'] = ''; // Clear modification check
-    next();
-};
+
 
 // Apply general rate limiting to all API routes
 router.use(apiLimiter);
