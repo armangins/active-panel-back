@@ -1,6 +1,6 @@
 const { z } = require('zod');
 
-const priceSchema = z.union([z.string(), z.number()]).optional().transform(val => (val === '' || val === null || val === undefined) ? undefined : String(val));
+const priceSchema = z.union([z.string(), z.number()]).optional().transform(val => (val === null || val === undefined) ? undefined : String(val));
 
 const productObject = z.object({
     name: z.string().min(1),
@@ -16,7 +16,11 @@ const productObject = z.object({
     manage_stock: z.boolean().default(true),
     stock_quantity: z.union([z.string(), z.number(), z.null()]).optional(),
     categories: z.array(z.union([z.object({ id: z.coerce.number() }), z.coerce.number()])).optional(),
-    images: z.array(z.object({ id: z.coerce.number() })).optional(),
+    images: z.array(z.object({
+        id: z.coerce.number().optional(),
+        src: z.string().optional(),
+        alt: z.string().optional()
+    })).optional(),
     attributes: z.array(z.object({
         id: z.coerce.number(),
         name: z.string().optional(),

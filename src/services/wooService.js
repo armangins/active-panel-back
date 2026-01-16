@@ -10,9 +10,23 @@ const apiCache = new Map();
 const settingsCache = new Map();
 // Cache for product data (TTL: 5 minutes)
 const productCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
+// Dedicated cache for filter results (TTL: 5 minutes)
+const filterCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
 
 /**
- * Sanitize string to prevent XSS and remove HTML tags
+ * Generate consistent cache key from filter parameters
+ */
+/**
+ * Generate consistent cache key from filter parameters
+ */
+const generateCacheKey = (userId, params) => {
+    const { search, category, type, stock_status, min_price, max_price, page, per_page } = params;
+    // SECURITY: Include userId in cache key to prevent cross-user data leaks
+    return `user:${userId}:filters:${search || ''}:${Array.isArray(category) ? category.sort().join(',') : category || ''}:${type || ''}:${stock_status || ''}:${min_price || ''}:${max_price || ''}:${page || 1}:${per_page || 24}`;
+};
+
+/**
+ * Extract pagination information from WooCommerce response headers
  */
 const sanitizeString = (str) => {
     if (typeof str !== 'string') return str;
@@ -30,27 +44,38 @@ const extractPagination = (response) => ({
 /**
  * Sanitize and format product data
  */
-const prepareProductData = (data) => ({
-    ...data,
-    name: data.name ? sanitizeString(data.name) : undefined,
-    slug: data.slug ? sanitizeString(data.slug) : undefined,
-    description: data.description ? sanitizeString(data.description) : undefined,
-    short_description: data.short_description ? sanitizeString(data.short_description) : undefined,
-    sku: data.sku ? sanitizeString(data.sku) : undefined,
-    // Convert dates to ISO 8601 format with UTC timezone for WooCommerce API
-    date_on_sale_from: data.date_on_sale_from ? `${data.date_on_sale_from}T00:00:00Z` : null,
-    date_on_sale_to: data.date_on_sale_to ? `${data.date_on_sale_to}T23:59:59Z` : null,
-    ...(data.attributes && Array.isArray(data.attributes) && {
-        attributes: data.attributes.map(attr => ({
+const prepareProductData = (data) => {
+    const result = {
+        ...data,
+        name: data.name ? sanitizeString(data.name) : undefined,
+        slug: data.slug ? sanitizeString(data.slug) : undefined,
+        description: data.description ? sanitizeString(data.description) : undefined,
+        short_description: data.short_description ? sanitizeString(data.short_description) : undefined,
+        sku: data.sku ? sanitizeString(data.sku) : undefined,
+    };
+
+    // Only add date fields if they exist in the original data
+    if ('date_on_sale_from' in data) {
+        result.date_on_sale_from = data.date_on_sale_from ? `${data.date_on_sale_from}T00:00:00Z` : '';
+    }
+    if ('date_on_sale_to' in data) {
+        result.date_on_sale_to = data.date_on_sale_to ? `${data.date_on_sale_to}T23:59:59Z` : '';
+    }
+
+    // Handle attributes if present
+    if (data.attributes && Array.isArray(data.attributes)) {
+        result.attributes = data.attributes.map(attr => ({
             ...attr,
             name: attr.name ? sanitizeString(attr.name) : attr.name,
             options: attr.options && Array.isArray(attr.options)
                 ? attr.options.map(opt => sanitizeString(opt))
                 : attr.options,
             option: attr.option ? sanitizeString(attr.option) : attr.option,
-        }))
-    }),
-});
+        }));
+    }
+
+    return result;
+};
 
 /**
  * Sanitize and format coupon data
@@ -78,6 +103,7 @@ const getApi = async (userId) => {
         return apiCache.get(userId);
     }
 
+    // Fetch settings (check cache first)
     // Fetch settings (check cache first)
     let settings = settingsCache.get(userId);
     if (!settings) {
@@ -109,11 +135,17 @@ const getApi = async (userId) => {
 
 const wooService = {
     getProducts: async (userId, params = {}) => {
-        // Cache Key covering User and Query Params
-        const cacheKey = `products_${userId}_${JSON.stringify(params)}`;
-        const cachedData = productCache.get(cacheKey);
+        // Use dedicated filter cache with better key generation
+        const cacheKey = generateCacheKey(userId, params);
+        const cachedData = filterCache.get(cacheKey);
 
         if (cachedData) {
+            console.log('✅ Filter cache HIT:', cacheKey);
+            return cachedData;
+        }
+
+        if (cachedData) {
+            console.log('✅ Filter cache HIT:', cacheKey);
             return cachedData;
         }
 
@@ -136,8 +168,9 @@ const wooService = {
             totalProducts: pagination.total
         };
 
-        // Store in cache
-        productCache.set(cacheKey, result);
+        // Store in filter cache
+        filterCache.set(cacheKey, result);
+        console.log('💾 Cached filter result:', cacheKey);
         return result;
     },
 
@@ -155,7 +188,8 @@ const wooService = {
     },
 
     createProduct: async (userId, data) => {
-        productCache.flushAll(); // Invalidate cache
+        productCache.flushAll();
+        filterCache.flushAll(); // Clear filter cache when products change // Invalidate cache
         const prepareData = prepareProductData(data);
         console.log('🔍 [CREATE] Scheduled pricing data:', {
             date_on_sale_from: prepareData.date_on_sale_from,
@@ -169,11 +203,8 @@ const wooService = {
 
     updateProduct: async (userId, productId, data) => {
         productCache.flushAll(); // Invalidate cache
+        filterCache.flushAll(); // Clear filter cache
         const prepareData = prepareProductData(data);
-        console.log('🔍 [UPDATE] Scheduled pricing data:', {
-            date_on_sale_from: prepareData.date_on_sale_from,
-            date_on_sale_to: prepareData.date_on_sale_to
-        });
         const api = await getApi(userId);
         const response = await api.put(`products/${productId}`, prepareData);
 
@@ -181,6 +212,8 @@ const wooService = {
     },
 
     deleteProduct: async (userId, productId) => {
+        productCache.flushAll();
+        filterCache.flushAll(); // Clear filter cache when products change
         try {
             productCache.flushAll(); // Invalidate cache
             const api = await getApi(userId);
@@ -451,6 +484,7 @@ const wooService = {
 
     createVariation: async (userId, productId, data) => {
         productCache.flushAll(); // Invalidate cache - price range might change
+        filterCache.flushAll(); // Clear filter cache when products change
         try {
             const api = await getApi(userId);
             const response = await api.post(`products/${productId}/variations`, data);

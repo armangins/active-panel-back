@@ -2713,3 +2713,1234 @@ Request Body: {
   "stock_status": "instock"
 }
 
+[2026-01-10T12:57:40.217Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "new product",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "59",
+  "regular_price": 120,
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>99.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 99.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>59.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 59.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-10T12:57:45.500Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "new product",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "59",
+  "regular_price": 120,
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>99.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 99.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>59.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 59.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-10T12:59:35.321Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "new product",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "59",
+  "regular_price": "99",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>99.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 99.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>59.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 59.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-10T13:00:29.956Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "new product",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "59",
+  "regular_price": "99",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>99.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 99.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>59.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 59.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-10T13:03:27.111Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "new product",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>זהו תוכן מעודכן</p>",
+  "short_description": "<p>זהו תוכן מעודכן</p>",
+  "stock_quantity": 12,
+  "price": "59",
+  "regular_price": "99",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>99.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 99.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>59.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 59.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-12T21:08:47.924Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "מוצר מעודכן",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>טקסט חדש</p>",
+  "short_description": "<p>טקסט חדש</p>",
+  "stock_quantity": 12,
+  "price": "30",
+  "regular_price": "50",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    },
+    {
+      "id": 56047,
+      "date_created": "2026-01-11T19:39:11",
+      "date_created_gmt": "2026-01-11T19:39:11",
+      "date_modified": "2026-01-11T19:39:11",
+      "date_modified_gmt": "2026-01-11T19:39:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "name": "40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2432px) 100vw, 2432px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x-1400x1400.webp"
+    },
+    {
+      "id": 56048,
+      "date_created": "2026-01-11T19:43:59",
+      "date_created_gmt": "2026-01-11T19:43:59",
+      "date_modified": "2026-01-11T19:43:59",
+      "date_modified_gmt": "2026-01-11T19:43:59",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "name": "e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2368px) 100vw, 2368px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i-1400x1400.webp"
+    },
+    {
+      "id": 56049,
+      "date_created": "2026-01-11T19:58:11",
+      "date_created_gmt": "2026-01-11T19:58:11",
+      "date_modified": "2026-01-11T19:58:11",
+      "date_modified_gmt": "2026-01-11T19:58:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "name": "65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 1920px) 100vw, 1920px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape-1400x1080.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    },
+    {
+      "id": 299,
+      "name": "עוד קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a2%d7%95%d7%93-%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    },
+    {
+      "id": 298,
+      "name": "קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>50.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 50.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>30.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 30.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-12T21:08:53.161Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "מוצר מעודכן",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>טקסט חדש</p>",
+  "short_description": "<p>טקסט חדש</p>",
+  "stock_quantity": 12,
+  "price": "30",
+  "regular_price": "50",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    },
+    {
+      "id": 56047,
+      "date_created": "2026-01-11T19:39:11",
+      "date_created_gmt": "2026-01-11T19:39:11",
+      "date_modified": "2026-01-11T19:39:11",
+      "date_modified_gmt": "2026-01-11T19:39:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "name": "40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2432px) 100vw, 2432px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x-1400x1400.webp"
+    },
+    {
+      "id": 56048,
+      "date_created": "2026-01-11T19:43:59",
+      "date_created_gmt": "2026-01-11T19:43:59",
+      "date_modified": "2026-01-11T19:43:59",
+      "date_modified_gmt": "2026-01-11T19:43:59",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "name": "e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2368px) 100vw, 2368px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i-1400x1400.webp"
+    },
+    {
+      "id": 56049,
+      "date_created": "2026-01-11T19:58:11",
+      "date_created_gmt": "2026-01-11T19:58:11",
+      "date_modified": "2026-01-11T19:58:11",
+      "date_modified_gmt": "2026-01-11T19:58:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "name": "65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 1920px) 100vw, 1920px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape-1400x1080.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    },
+    {
+      "id": 299,
+      "name": "עוד קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a2%d7%95%d7%93-%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    },
+    {
+      "id": 298,
+      "name": "קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>50.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 50.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>30.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 30.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-12T21:14:49.659Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "מוצר מעודכן",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>טקסט חדש</p>",
+  "short_description": "<p>טקסט חדש</p>",
+  "stock_quantity": 12,
+  "price": "30",
+  "regular_price": "50",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    },
+    {
+      "id": 56047,
+      "date_created": "2026-01-11T19:39:11",
+      "date_created_gmt": "2026-01-11T19:39:11",
+      "date_modified": "2026-01-11T19:39:11",
+      "date_modified_gmt": "2026-01-11T19:39:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "name": "40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2432px) 100vw, 2432px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x-1400x1400.webp"
+    },
+    {
+      "id": 56048,
+      "date_created": "2026-01-11T19:43:59",
+      "date_created_gmt": "2026-01-11T19:43:59",
+      "date_modified": "2026-01-11T19:43:59",
+      "date_modified_gmt": "2026-01-11T19:43:59",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "name": "e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2368px) 100vw, 2368px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i-1400x1400.webp"
+    },
+    {
+      "id": 56049,
+      "date_created": "2026-01-11T19:58:11",
+      "date_created_gmt": "2026-01-11T19:58:11",
+      "date_modified": "2026-01-11T19:58:11",
+      "date_modified_gmt": "2026-01-11T19:58:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "name": "65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 1920px) 100vw, 1920px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape-1400x1080.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    },
+    {
+      "id": 299,
+      "name": "עוד קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a2%d7%95%d7%93-%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    },
+    {
+      "id": 298,
+      "name": "קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>50.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 50.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>30.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 30.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-12T21:14:53.033Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "מוצר מעודכן",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>טקסט חדש</p>",
+  "short_description": "<p>טקסט חדש</p>",
+  "stock_quantity": 12,
+  "price": "30",
+  "regular_price": "50",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    },
+    {
+      "id": 56047,
+      "date_created": "2026-01-11T19:39:11",
+      "date_created_gmt": "2026-01-11T19:39:11",
+      "date_modified": "2026-01-11T19:39:11",
+      "date_modified_gmt": "2026-01-11T19:39:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "name": "40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2432px) 100vw, 2432px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x-1400x1400.webp"
+    },
+    {
+      "id": 56048,
+      "date_created": "2026-01-11T19:43:59",
+      "date_created_gmt": "2026-01-11T19:43:59",
+      "date_modified": "2026-01-11T19:43:59",
+      "date_modified_gmt": "2026-01-11T19:43:59",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "name": "e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2368px) 100vw, 2368px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i-1400x1400.webp"
+    },
+    {
+      "id": 56049,
+      "date_created": "2026-01-11T19:58:11",
+      "date_created_gmt": "2026-01-11T19:58:11",
+      "date_modified": "2026-01-11T19:58:11",
+      "date_modified_gmt": "2026-01-11T19:58:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "name": "65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 1920px) 100vw, 1920px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape-1400x1080.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    },
+    {
+      "id": 299,
+      "name": "עוד קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a2%d7%95%d7%93-%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    },
+    {
+      "id": 298,
+      "name": "קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>50.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 50.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>30.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 30.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-12T21:16:20.017Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "מוצר מעודכן",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>טקסט חדש</p>",
+  "short_description": "<p>טקסט חדש</p>",
+  "stock_quantity": 12,
+  "price": "30",
+  "regular_price": "50",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    },
+    {
+      "id": 56047,
+      "date_created": "2026-01-11T19:39:11",
+      "date_created_gmt": "2026-01-11T19:39:11",
+      "date_modified": "2026-01-11T19:39:11",
+      "date_modified_gmt": "2026-01-11T19:39:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "name": "40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2432px) 100vw, 2432px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x-1400x1400.webp"
+    },
+    {
+      "id": 56048,
+      "date_created": "2026-01-11T19:43:59",
+      "date_created_gmt": "2026-01-11T19:43:59",
+      "date_modified": "2026-01-11T19:43:59",
+      "date_modified_gmt": "2026-01-11T19:43:59",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "name": "e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2368px) 100vw, 2368px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i-1400x1400.webp"
+    },
+    {
+      "id": 56049,
+      "date_created": "2026-01-11T19:58:11",
+      "date_created_gmt": "2026-01-11T19:58:11",
+      "date_modified": "2026-01-11T19:58:11",
+      "date_modified_gmt": "2026-01-11T19:58:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "name": "65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 1920px) 100vw, 1920px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape-1400x1080.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    },
+    {
+      "id": 299,
+      "name": "עוד קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a2%d7%95%d7%93-%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    },
+    {
+      "id": 298,
+      "name": "קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>50.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 50.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>30.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 30.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-12T21:18:04.925Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "מוצר מעודכן",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>טקסט חדש</p>",
+  "short_description": "<p>טקסט חדש</p>",
+  "stock_quantity": 12,
+  "price": "30",
+  "regular_price": "50",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    },
+    {
+      "id": 56047,
+      "date_created": "2026-01-11T19:39:11",
+      "date_created_gmt": "2026-01-11T19:39:11",
+      "date_modified": "2026-01-11T19:39:11",
+      "date_modified_gmt": "2026-01-11T19:39:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "name": "40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2432px) 100vw, 2432px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x-1400x1400.webp"
+    },
+    {
+      "id": 56048,
+      "date_created": "2026-01-11T19:43:59",
+      "date_created_gmt": "2026-01-11T19:43:59",
+      "date_modified": "2026-01-11T19:43:59",
+      "date_modified_gmt": "2026-01-11T19:43:59",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "name": "e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2368px) 100vw, 2368px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i-1400x1400.webp"
+    },
+    {
+      "id": 56049,
+      "date_created": "2026-01-11T19:58:11",
+      "date_created_gmt": "2026-01-11T19:58:11",
+      "date_modified": "2026-01-11T19:58:11",
+      "date_modified_gmt": "2026-01-11T19:58:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "name": "65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 1920px) 100vw, 1920px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape-1400x1080.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    },
+    {
+      "id": 299,
+      "name": "עוד קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a2%d7%95%d7%93-%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    },
+    {
+      "id": 298,
+      "name": "קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>50.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 50.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>30.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 30.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+
+[2026-01-12T21:18:46.809Z] Validation Error: [
+  {
+    "code": "invalid_union",
+    "errors": [
+      [
+        {
+          "expected": "string",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected string, received null"
+        }
+      ],
+      [
+        {
+          "expected": "number",
+          "code": "invalid_type",
+          "path": [],
+          "message": "Invalid input: expected number, received null"
+        }
+      ]
+    ],
+    "path": [
+      "sale_price"
+    ],
+    "message": "Invalid input"
+  }
+]
+Request Body: {
+  "id": 56008,
+  "name": "מוצר מעודכן",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>טקסט חדש</p>",
+  "short_description": "<p>טקסט חדש</p>",
+  "stock_quantity": 12,
+  "price": "30",
+  "regular_price": "50",
+  "sale_price": null,
+  "images": [
+    {
+      "id": 56019,
+      "date_created": "2026-01-09T18:09:01",
+      "date_created_gmt": "2026-01-09T18:09:01",
+      "date_modified": "2026-01-09T18:09:11",
+      "date_modified_gmt": "2026-01-09T18:09:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2.webp",
+      "name": "Gemini_Generated_Image_rlkq81rlkq81rlkq",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/Gemini_Generated_Image_rlkq81rlkq81rlkq-2-1400x1400.webp"
+    },
+    {
+      "id": 56047,
+      "date_created": "2026-01-11T19:39:11",
+      "date_created_gmt": "2026-01-11T19:39:11",
+      "date_modified": "2026-01-11T19:39:11",
+      "date_modified_gmt": "2026-01-11T19:39:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "name": "40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2432px) 100vw, 2432px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/40a7d121-117c-4edf-a01c-7b7d6b88d064-Gemini_Generated_Image_sm0xgssm0xgssm0x-1400x1400.webp"
+    },
+    {
+      "id": 56048,
+      "date_created": "2026-01-11T19:43:59",
+      "date_created_gmt": "2026-01-11T19:43:59",
+      "date_modified": "2026-01-11T19:43:59",
+      "date_modified_gmt": "2026-01-11T19:43:59",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "name": "e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 2368px) 100vw, 2368px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/e4794681-4e0c-4f51-bd48-1e54ba8876a3-Gemini_Generated_Image_ed5icbed5icbed5i-1400x1400.webp"
+    },
+    {
+      "id": 56049,
+      "date_created": "2026-01-11T19:58:11",
+      "date_created_gmt": "2026-01-11T19:58:11",
+      "date_modified": "2026-01-11T19:58:11",
+      "date_modified_gmt": "2026-01-11T19:58:11",
+      "src": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "name": "65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape.webp",
+      "alt": "",
+      "srcset": "",
+      "sizes": "(max-width: 1920px) 100vw, 1920px",
+      "thumbnail": "https://mg-jewelry-co-il-420340.hostingersite.com/wp-content/uploads/2026/01/65f6fe8e-beee-492f-afed-fa413548adad-White20Simple20Photocentric20Jewelry20Promo20Banner20Landscape-1400x1080.webp"
+    }
+  ],
+  "categories": [
+    {
+      "id": 171,
+      "name": "New Arrivals",
+      "slug": "new-arrivals"
+    },
+    {
+      "id": 177,
+      "name": "SALE",
+      "slug": "sale"
+    },
+    {
+      "id": 299,
+      "name": "עוד קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a2%d7%95%d7%93-%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    },
+    {
+      "id": 298,
+      "name": "קטגוריה שהוספתי הרגע",
+      "slug": "%d7%a7%d7%98%d7%92%d7%95%d7%a8%d7%99%d7%94-%d7%a9%d7%94%d7%95%d7%a1%d7%a4%d7%aa%d7%99-%d7%94%d7%a8%d7%92%d7%a2"
+    }
+  ],
+  "sku": "SKU-3R15GFZL",
+  "date_on_sale_from": null,
+  "date_on_sale_to": null,
+  "on_sale": true,
+  "permalink": "https://mg-jewelry-co-il-420340.hostingersite.com/product/%d7%93%d7%92%d7%92%d7%93%d7%a9%d7%92/",
+  "price_html": "<del aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>50.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></del> <span class=\"screen-reader-text\">המחיר המקורי היה: 50.00&nbsp;&#8362;.</span><ins aria-hidden=\"true\"><span class=\"woocommerce-Price-amount amount\"><bdi>30.00&nbsp;<span class=\"woocommerce-Price-currencySymbol\">&#8362;</span></bdi></span></ins><span class=\"screen-reader-text\">המחיר הנוכחי הוא: 30.00&nbsp;&#8362;.</span>",
+  "stock_status": "instock"
+}
+

@@ -58,6 +58,21 @@ const productController = {
 
             const product = await wooService.createProduct(req.user._id, validatedData);
 
+            // Cleanup: Delete images from Firebase Storage after successful WordPress import
+            if (validatedData.images && Array.isArray(validatedData.images)) {
+                const firebaseImageUrls = validatedData.images
+                    .filter(img => img.src && img.src.includes('storage.googleapis.com'))
+                    .map(img => img.src);
+                
+                if (firebaseImageUrls.length > 0) {
+                    console.log(`Cleaning up ${firebaseImageUrls.length} Firebase Storage images for new product`);
+                    const storageService = require('../services/storageService');
+                    storageService.deleteFiles(firebaseImageUrls).catch(err => {
+                        console.error('Background cleanup failed:', err);
+                    });
+                }
+            }
+
             res.status(201).json({
                 success: true,
                 data: product
@@ -101,10 +116,14 @@ const productController = {
         try {
             const productId = req.params.id;
             const userId = req.user._id;
+            console.time(`UPDATE_TOTAL_${productId}`);
 
             // SECURITY: Verify product exists and belongs to user's store before updating
             try {
+                console.time(`UPDATE_VERIFY_${productId}`);
                 const existingProduct = await wooService.getProduct(userId, productId);
+                console.timeEnd(`UPDATE_VERIFY_${productId}`);
+                
                 if (!existingProduct) {
                     return res.status(404).json({
                         success: false,
@@ -126,7 +145,28 @@ const productController = {
             // SECURITY: Use validated data from middleware instead of raw req.body
             const validatedData = req.validatedData || req.body;
 
+            console.time(`UPDATE_API_CALL_${productId}`);
             const product = await wooService.updateProduct(userId, productId, validatedData);
+            console.timeEnd(`UPDATE_API_CALL_${productId}`);
+            
+            console.timeEnd(`UPDATE_TOTAL_${productId}`);
+
+            // Cleanup: Delete images from Firebase Storage after successful WordPress import
+            // WordPress has now downloaded and stored the images, so we don't need them in Firebase anymore
+            if (validatedData.images && Array.isArray(validatedData.images)) {
+                const firebaseImageUrls = validatedData.images
+                    .filter(img => img.src && img.src.includes('storage.googleapis.com'))
+                    .map(img => img.src);
+                
+                if (firebaseImageUrls.length > 0) {
+                    console.log(`Cleaning up ${firebaseImageUrls.length} Firebase Storage images for product ${productId}`);
+                    // Don't await - let cleanup happen in background
+                    const storageService = require('../services/storageService');
+                    storageService.deleteFiles(firebaseImageUrls).catch(err => {
+                        console.error('Background cleanup failed:', err);
+                    });
+                }
+            }
 
             res.status(200).json({
                 success: true,

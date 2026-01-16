@@ -9,7 +9,7 @@ require('dotenv').config();
 
 const app = express();
 
-// Trust proxy - required for correct cookie handling behind reverse proxy (Render, etc.)
+// Trust proxy - required for correct cookie handling behind reverse proxy
 // This ensures Express correctly identifies HTTPS and sets secure cookies
 app.set('trust proxy', 1);
 
@@ -32,10 +32,34 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Security Middleware
-app.use(helmet());
+app.use(helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+}));
 app.use(compression());
+// CORS Configuration
+// Allow origins from environment variable or standard defaults
+const envOrigins = process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim()) : [];
+const allowedOrigins = [
+    frontendUrl,                 // Primary Frontend (from .env)
+    'http://localhost:5173',     // Local Vite Frontend
+    ...envOrigins                // Additional origins from .env
+];
+
 app.use(cors({
-    origin: frontendUrl,
+    origin: function(origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        // Match against allowed origins or subdomains of the primary frontend
+        const isAllowed = allowedOrigins.some(ao => ao === origin);
+        
+        if (isAllowed) {
+            callback(null, true);
+        } else {
+            console.warn(`BLOCKED BY CORS: ${origin}`);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     exposedHeaders: ['x-wp-total', 'x-wp-totalpages']
 }));
@@ -86,14 +110,13 @@ const { ensureAuth } = require('./middleware/auth');
 const apiRoutes = require('./routes/api');
 const settingsRoutes = require('./routes/settings');
 const authJwtRoutes = require('./routes/auth-jwt'); // New JWT routes
-const authRoutes = require('./routes/auth'); // Keep old routes for Google OAuth (will migrate)
+const publicRoutes = require('./routes/public');
 
 // Mount JWT Auth Routes FIRST (Public)
 app.use('/api/auth', authJwtRoutes);
 
-// Mount old auth routes for Google OAuth (temporary - will be migrated)
-// These will be merged into auth-jwt.js later
-app.use('/api/auth-legacy', authRoutes);
+// Mount Public Routes (Media Proxy, etc)
+app.use('/api', publicRoutes);
 
 // Debug Route (Public, No Auth)
 const debugController = require('./controllers/debugController');
@@ -132,7 +155,8 @@ if (require.main === module) {
             
             // Start background jobs
             require('./jobs/orderPoller');
-            console.log('✅ Order poller service started');
+            require('./jobs/stockPoller');
+            console.log('✅ Order & Stock poller services started');
             
             wooService.warmCache(); // Start cache warming
         });

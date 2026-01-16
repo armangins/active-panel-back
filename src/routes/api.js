@@ -11,14 +11,92 @@ const attributeController = require('../controllers/attributeController');
 const couponController = require('../controllers/couponController');
 const debugController = require('../controllers/debugController');
 const { ensureAuth } = require('../middleware/auth');
-const multer = require('multer');
+const Busboy = require('busboy');
 const {
-
     validateBatchVariations,
     validateProductId,
     validateVariationId,
     validateUpdateOrder
 } = require('../middleware/validation');
+
+// Custom Busboy Middleware for Firebase Functions
+const handleUpload = (req, res, next) => {
+    if (req.method !== 'POST') {
+        return next();
+    }
+
+    const busboy = Busboy({ 
+        headers: req.headers,
+        limits: {
+            fileSize: 5 * 1024 * 1024 // 5MB limit
+        }
+    });
+
+    const fileBuffer = [];
+    let fileInfo = {};
+    let fileCount = 0;
+
+    busboy.on('file', (name, file, info) => {
+        const { filename, encoding, mimeType } = info;
+        
+        if (!mimeType.startsWith('image/')) {
+             file.resume(); // Skip file
+             return res.status(400).json({ error: 'Only image files are allowed!' });
+        }
+
+        fileCount++;
+        fileInfo = { 
+            originalname: filename, 
+            mimetype: mimeType, 
+            encoding 
+        };
+
+        file.on('data', (data) => {
+            fileBuffer.push(data);
+        });
+    });
+
+    busboy.on('field', (fieldname, val) => {
+        if (!req.body) req.body = {};
+        req.body[fieldname] = val;
+    });
+
+    busboy.on('finish', () => {
+        if (fileCount > 0 && fileBuffer.length > 0) {
+            req.file = {
+                buffer: Buffer.concat(fileBuffer),
+                ...fileInfo
+            };
+            next();
+        } else {
+            // If no file was uploaded suitable for req.file
+             if (fileCount === 0) {
+                 // It might be a non-file request, but this route expects a file?
+                 // Let controller handle 'No file uploaded'
+                 next(); 
+             } else {
+                 next();
+             }
+        }
+    });
+
+    busboy.on('error', (err) => {
+        console.error('Busboy Error:', err);
+        // Handle "Unexpected end of form" gracefully if it still somehow happens
+        if (err.message === 'Unexpected end of form') {
+             res.status(400).json({ error: 'Upload failed: Data transfer interrupted. Please try again.' });
+        } else {
+             next(err);
+        }
+    });
+    // CRITICAL: Firebase Functions Gen 2 (or just Cloud Functions) 
+    // may have already read the body into req.rawBody.
+    if (req.rawBody) {
+        busboy.end(req.rawBody);
+    } else {
+        req.pipe(busboy);
+    }
+};
 const { apiLimiter, mutationLimiter, batchLimiter } = require('../middleware/rateLimiter');
 const validate = require('../middleware/validate');
 const { productSchema, variationSchema, updateProductSchema, updateVariationSchema } = require('../schemas/product');
@@ -34,35 +112,6 @@ const noCacheMiddleware = (req, res, next) => {
     req.headers['if-modified-since'] = ''; // Clear modification check
     next();
 };
-
-const upload = multer({
-    storage: multer.memoryStorage(),
-    limits: {
-        fileSize: 5 * 1024 * 1024 // 5MB limit
-    },
-    fileFilter: (req, file, cb) => {
-        if (file.mimetype.startsWith('image/')) {
-            cb(null, true);
-        } else {
-            cb(new Error('Only image files are allowed!'), false);
-        }
-    }
-});
-
-const uploadMiddleware = (req, res, next) => {
-    upload.single('file')(req, res, (err) => {
-        if (err) {
-            console.error('Upload Error:', err.message);
-            return res.status(400).json({
-                error: err.message,
-                code: err.code || 'UPLOAD_ERROR'
-            });
-        }
-        next();
-    });
-};
-
-
 
 // Apply general rate limiting to all API routes
 router.use(apiLimiter);
@@ -148,9 +197,9 @@ router.delete('/orders/:id',
 router.get('/customers', ensureAuth, customerController.getAllCustomers);
 router.get('/customers/:id', ensureAuth, customerController.getCustomerById);
 
-
 // Media Routes
-router.post('/media', ensureAuth, upload.single('file'), mediaController.uploadMedia);
+router.post('/media', ensureAuth, handleUpload, mediaController.uploadMedia);
+router.post('/media/sideload', ensureAuth, mutationLimiter, mediaController.sideloadMedia);
 
 // Category Routes (with no-cache for debugging)
 
@@ -165,4 +214,6 @@ router.delete('/coupons/:id', ensureAuth, couponController.deleteCoupon);
 
 // Debug Route
 
+
+// Force redeploy: 2026-01-11 19:50
 module.exports = router;

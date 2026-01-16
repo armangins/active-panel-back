@@ -7,12 +7,18 @@ const variationController = {
      */
     getAllVariations: async (req, res) => {
         try {
+            console.log('🟡 [BACKEND-CONTROLLER] getAllVariations - Request received');
+            console.log('🟡 [BACKEND-CONTROLLER] Product ID:', req.params.productId);
+
             const { variations, total } = await wooService.getVariations(
                 req.user._id,
                 req.params.productId,
                 req.query
             );
 
+            console.log('🟢 [BACKEND-CONTROLLER] getAllVariations - Success');
+            console.log('🟢 [BACKEND-CONTROLLER] Total variations found:', variations ? variations.length : 0);
+            
             // Set pagination header
             res.set('x-wp-total', total);
             res.json(variations);

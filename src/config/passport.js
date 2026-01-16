@@ -12,19 +12,16 @@ module.exports = function (passport) {
     let callbackURL = process.env.GOOGLE_CALLBACK_URL;
     
     if (!callbackURL) {
-        // Use BACKEND_URL if provided, or construct from Render service URL
+        // Use BACKEND_URL if provided, or construct from local defaults
         if (process.env.BACKEND_URL) {
-            // Ensure HTTPS
-            const backendUrl = process.env.BACKEND_URL.replace(/^http:\/\//, 'https://');
+            // Ensure HTTPS in production, allow HTTP in development
+            const backendUrl = process.env.BACKEND_URL.replace(/\/$/, '');
             callbackURL = `${backendUrl}/api/auth/google/callback`;
-        } else if (process.env.NODE_ENV === 'production') {
-            // In production, use Render service URL with HTTPS
-            // Render provides HTTPS by default
-            callbackURL = 'https://active-panel-back.onrender.com/api/auth/google/callback';
+        } else if (process.env.NODE_ENV === 'development') {
+            callbackURL = 'http://localhost:3000/api/auth/google/callback';
         } else {
-            // Development: use localhost with port from PORT env var or default 3000
-            const port = process.env.PORT || 3000;
-            callbackURL = `http://localhost:${port}/api/auth/google/callback`;
+            // In production, GOOGLE_CALLBACK_URL or BACKEND_URL must be provided
+            console.error('CRITICAL: GOOGLE_CALLBACK_URL or BACKEND_URL must be defined in production');
         }
     }
     
@@ -98,14 +95,13 @@ module.exports = function (passport) {
     let signupCallbackURL = process.env.GOOGLE_SIGNUP_CALLBACK_URL;
     if (!signupCallbackURL) {
         if (process.env.BACKEND_URL) {
-            const backendUrl = process.env.BACKEND_URL.replace(/^http:\/\//, 'https://');
+            const backendUrl = process.env.BACKEND_URL.replace(/\/$/, '');
             signupCallbackURL = `${backendUrl}/api/auth/google/signup/callback`;
-        } else if (process.env.NODE_ENV === 'production') {
-            signupCallbackURL = 'https://active-panel-back.onrender.com/api/auth/google/signup/callback';
+        } else if (process.env.NODE_ENV === 'development') {
+            signupCallbackURL = 'http://localhost:3000/api/auth/google/signup/callback';
         } else {
-            // Development: use localhost with port from PORT env var or default 3000
-            const port = process.env.PORT || 3000;
-            signupCallbackURL = `http://localhost:${port}/api/auth/google/signup/callback`;
+            // In production, GOOGLE_SIGNUP_CALLBACK_URL or BACKEND_URL must be provided
+            console.error('CRITICAL: GOOGLE_SIGNUP_CALLBACK_URL or BACKEND_URL must be defined in production');
         }
     }
     

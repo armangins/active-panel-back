@@ -16,6 +16,7 @@ const jwt = require('../utils/jwt');
 const validate = require('../middleware/validate');
 const { loginSchema, registerSchema } = require('../schemas/auth');
 const { ensureAuth } = require('../middleware/auth');
+const { admin } = require('../config/firebase');
 
 const router = express.Router();
 
@@ -422,23 +423,51 @@ router.get('/google', (req, res, next) => {
     if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
         return res.status(500).json({ error: 'Google Auth Credentials missing in server configuration.' });
     }
+    
+    // Encode the origin in the state parameter if provided
+    const origin = req.query.origin;
+    const state = origin ? Buffer.from(origin).toString('base64') : undefined;
+
     // Use google-login strategy
     passport.authenticate('google-login', {
         scope: ['profile', 'email'],
-        prompt: 'select_account'
+        prompt: 'select_account',
+        state: state
     })(req, res, next);
 });
 
 // @desc    Google auth callback - JWT version
 // @route   GET /api/auth/google/callback
 router.get('/google/callback', (req, res, next) => {
+    // Helper to determine the correct frontend URL
+    const getValidFrontendUrl = (state) => {
+        const defaultUrl = process.env.FRONTEND_URL || 'https://activepanel.co.il';
+        if (!state) return defaultUrl;
+        
+        try {
+            const origin = Buffer.from(state, 'base64').toString('ascii');
+            // Allow localhost and production domains
+            const allowedOrigins = [
+                'http://localhost:5173',
+                'http://localhost:3000',
+                'https://active-panel.web.app',
+                'https://activepanel.co.il',
+                'https://www.activepanel.co.il'
+            ];
+            
+            if (allowedOrigins.includes(origin)) {
+                return origin;
+            }
+        } catch (e) {
+            console.error('Invalid state param in OAuth callback', e);
+        }
+        return defaultUrl;
+    };
+
+    const frontendUrl = getValidFrontendUrl(req.query.state);
+
     // Check for OAuth errors in query params
     if (req.query.error) {
-        let frontendUrl = process.env.FRONTEND_URL;
-        if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
-            frontendUrl = frontendUrl.replace('http://', 'https://');
-        }
-
         const oauthError = req.query.error;
         const oauthErrorDescription = req.query.error_description || 'OAuth authentication failed';
 
@@ -457,12 +486,6 @@ router.get('/google/callback', (req, res, next) => {
     }
 
     passport.authenticate('google-login', async (err, user, info) => {
-        let frontendUrl = process.env.FRONTEND_URL;
-        // Enforce HTTPS in production
-        if (process.env.NODE_ENV === 'production' && frontendUrl.startsWith('http://')) {
-            frontendUrl = frontendUrl.replace('http://', 'https://');
-        }
-
         if (err) {
             console.error('Google Login OAuth Error:', err.message);
             let errorMessage = 'An error occurred during authentication. Please try again.';
@@ -501,15 +524,36 @@ router.get('/google/callback', (req, res, next) => {
             // Set refresh token cookie
             setRefreshTokenCookie(res, refreshToken);
 
-            // Redirect to frontend with access token in URL query parameter (safer for mobile redirects)
-            // Note: In a high security context, we would use a code exchange, but for this implementation
-            // query params are more robust than fragments which can be stripped by mobile browsers
+            // Redirect to frontend with access token
             res.redirect(`${frontendUrl}/auth/callback?access_token=${accessToken}`);
         } catch (error) {
             console.error('[OAuth JWT] Error generating tokens:', error.message);
             return res.redirect(`${frontendUrl}/login?error=google_auth_failed&message=${encodeURIComponent('Failed to generate authentication tokens. Please try again.')}`);
         }
     })(req, res, next);
+});
+
+// @desc    Get Firebase Custom Token
+// @route   GET /api/auth/firebase-token
+router.get('/firebase-token', ensureAuth, async (req, res) => {
+    try {
+        const userId = req.user._id.toString();
+        // Create custom token
+        const firebaseToken = await admin.auth().createCustomToken(userId, {
+            role: req.user.role // Optional claims
+        });
+
+        res.json({
+            success: true,
+            firebaseToken
+        });
+    } catch (error) {
+        console.error('Error creating Firebase custom token:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Failed to create Firebase token'
+        });
+    }
 });
 
 module.exports = router;

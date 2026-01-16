@@ -1,5 +1,5 @@
 /**
- * Entry point for Render deployment
+ * Entry point for deployment
  * This file starts the Express server
  */
 
