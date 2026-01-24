@@ -1,17 +1,70 @@
-const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
-const axios = require('axios');
-const FormData = require('form-data');
 const NodeCache = require('node-cache');
-const Settings = require('../models/Settings');
+const Integration = require('../models/Integration');
 const encryptionService = require('../config/encryption');
 
 // In-memory cache for API instances and settings
 const apiCache = new Map();
 const settingsCache = new Map();
 // Cache for product data (TTL: 5 minutes)
+const filterCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
+// ... (keep generateCacheKey etc)
+
+// ...
+
+/**
+ * Get or create WooCommerce API instance for a user
+ */
+const getApi = async (userId) => {
+    // Check API instance cache
+    if (apiCache.has(userId)) {
+        return apiCache.get(userId);
+    }
+
+    // Fetch settings (check cache first)
+    // Cache might store the integration object or just the api instance.
+    // For simplicity, we just rely on apiCache for the constructed object.
+    
+    // We need to fetch from DB if not cached
+    const integration = await Integration.findOne({ 
+        user: userId, 
+        provider: 'woocommerce',
+        isActive: true 
+    }).select('+credentials'); // SECURITY: Must explicitly request credentials
+
+    if (!integration) {
+        throw new Error('WooCommerce settings not configured');
+    }
+
+    try {
+        // Credentials are in a Mongoose Map
+        const encryptedKey = integration.credentials.get('consumerKey');
+        const encryptedSecret = integration.credentials.get('consumerSecret');
+        const storeUrl = integration.credentials.get('storeUrl');
+
+        if (!encryptedKey || !encryptedSecret || !storeUrl) {
+             throw new Error('Incomplete WooCommerce credentials');
+        }
+
+        const consumerKey = encryptionService.decrypt(encryptedKey);
+        const consumerSecret = encryptionService.decrypt(encryptedSecret);
+
+        const api = new WooCommerceRestApi({
+            url: storeUrl,
+            consumerKey: consumerKey,
+            consumerSecret: consumerSecret,
+            version: "wc/v3"
+        });
+
+        apiCache.set(userId, api);
+        return api;
+    } catch (err) {
+        console.error('WooService: Decryption or Init failed:', err.message);
+        throw err;
+    }
+};
 const productCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
 // Dedicated cache for filter results (TTL: 5 minutes)
-const filterCache = new NodeCache({ stdTTL: 300, checkperiod: 60 });
+
 
 /**
  * Generate consistent cache key from filter parameters
@@ -97,41 +150,7 @@ const prepareCouponData = (data) => ({
 /**
  * Get or create WooCommerce API instance for a user
  */
-const getApi = async (userId) => {
-    // Check API instance cache
-    if (apiCache.has(userId)) {
-        return apiCache.get(userId);
-    }
 
-    // Fetch settings (check cache first)
-    // Fetch settings (check cache first)
-    let settings = settingsCache.get(userId);
-    if (!settings) {
-        settings = await Settings.findOne({ user: userId });
-        if (!settings) {
-            throw new Error('WooCommerce settings not configured');
-        }
-        settingsCache.set(userId, settings);
-    }
-
-    try {
-        const consumerKey = encryptionService.decrypt(settings.consumerKey);
-        const consumerSecret = encryptionService.decrypt(settings.consumerSecret);
-
-        const api = new WooCommerceRestApi({
-            url: settings.storeUrl,
-            consumerKey: consumerKey,
-            consumerSecret: consumerSecret,
-            version: "wc/v3"
-        });
-
-        apiCache.set(userId, api);
-        return api;
-    } catch (err) {
-        console.error('WooService: Decryption failed:', err.message);
-        throw err;
-    }
-};
 
 const wooService = {
     getProducts: async (userId, params = {}) => {
@@ -720,25 +739,33 @@ const wooService = {
         }
     },
 
+    warmUserCache: async (userId) => {
+        try {
+            console.log(`🔥 [CACHE] Warming for user ${userId}`);
+            // Fetch page 1 of products
+            await wooService.getProducts(userId, { per_page: 24, page: 1 });
+        } catch (err) {
+            console.error(`❌ [CACHE] Failed to warm for user ${userId}:`, err.message);
+        }
+    },
+
     warmCache: async () => {
         console.log('🔥 [CACHE] Warming up started...');
         try {
              // 10 second delay to allow DB to fully stabilize and other services to boot
              setTimeout(async () => {
-                 const allSettings = await Settings.find({});
-                 console.log(`🔥 [CACHE] Found ${allSettings.stores || allSettings.length} stores to warm up`);
-                 
-                 for (const setting of allSettings) {
-                     if (!setting.user) continue;
-                     try {
-                         // Fetch page 1 of products
-                         console.log(`🔥 [CACHE] Warming for user ${setting.user}`);
-                         await wooService.getProducts(setting.user, { per_page: 24, page: 1 });
-                     } catch (err) {
-                         console.error(`❌ [CACHE] Failed to warm for user ${setting.user}:`, err.message);
+                 try {
+                     const allIntegrations = await Integration.find({ provider: 'woocommerce', isActive: true });
+                     console.log(`🔥 [CACHE] Found ${allIntegrations.length} stores to warm up`);
+                     
+                     for (const integration of allIntegrations) {
+                         if (!integration.user) continue;
+                         await wooService.warmUserCache(integration.user);
                      }
+                     console.log('✅ [CACHE] Warm up complete');
+                 } catch (innerErr) {
+                     console.error('Inner cache warm up error', innerErr);
                  }
-                 console.log('✅ [CACHE] Warm up complete');
              }, 10000);
         } catch (e) {
              console.error('Cache warm up failed', e);

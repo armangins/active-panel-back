@@ -1,6 +1,6 @@
 const socketConfig = require('../config/socket');
 const wooService = require('../services/wooService');
-const Settings = require('../models/Settings');
+const Integration = require('../models/Integration');
 
 // Polling intervals
 const POLLING_INTERVAL = 60 * 1000; // 60 seconds
@@ -74,13 +74,13 @@ const pollUserOrders = async (userId) => {
  */
 const startPolling = async () => {
     try {
-        // Find all users who have configured settings
+        // Find all users who have configured settings specifically for WooCommerce
         // In a larger app, you might want to query only users with active socket sessions from Redis
-        const settings = await Settings.find({}, 'user');
+        const integrations = await Integration.find({ provider: 'woocommerce', isActive: true }, 'user');
         
-        for (const setting of settings) {
-            if (setting.user) {
-                await pollUserOrders(setting.user);
+        for (const integration of integrations) {
+            if (integration.user) {
+                await pollUserOrders(integration.user);
             }
         }
     } catch (error) {
@@ -93,8 +93,9 @@ const startPolling = async () => {
 
 // Start the loop
 console.log('🚀 [POLLER] Background order polling initiated');
-startPolling();
+// startPolling(); // Don't start automatically on require
 
 module.exports = {
-   pollUserOrders // Export for manual triggering if needed
+   pollUserOrders,
+   startPolling // Export so app.js can start it
 };

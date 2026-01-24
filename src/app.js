@@ -125,6 +125,8 @@ app.get('/debug/categories-with-count', debugController.getCategoriesWithCount);
 // Mount Protected Routes
 app.use('/api', ensureAuth, apiRoutes);
 app.use('/api', ensureAuth, settingsRoutes);
+const integrationRoutes = require('./routes/integration');
+app.use('/api/integrations', ensureAuth, integrationRoutes);
 
 const PORT = process.env.PORT || 3000;
 const connectDB = require('./config/database');
@@ -153,8 +155,10 @@ if (require.main === module) {
             console.log('✅ JWT Authentication enabled');
             console.log('✅ Token cleanup job started');
             
-            // Start background jobs
-            require('./jobs/orderPoller');
+            // Start background jobs AFTER DB is connected
+            const orderPoller = require('./jobs/orderPoller');
+            if (orderPoller.startPolling) orderPoller.startPolling();
+            
             require('./jobs/stockPoller');
             console.log('✅ Order & Stock poller services started');
             
