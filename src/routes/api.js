@@ -9,6 +9,7 @@ const variationController = require('../controllers/variationController');
 const categoryController = require('../controllers/categoryController');
 const attributeController = require('../controllers/attributeController');
 const couponController = require('../controllers/couponController');
+const reportsController = require('../controllers/reportsController');
 const debugController = require('../controllers/debugController');
 const { ensureAuth } = require('../middleware/auth');
 const Busboy = require('busboy');
@@ -211,6 +212,13 @@ router.get('/coupons/:id', ensureAuth, couponController.getCouponById);
 router.post('/coupons', ensureAuth, mutationLimiter, validate(couponSchema), couponController.createCoupon);
 router.put('/coupons/:id', ensureAuth, mutationLimiter, validate(couponSchema), couponController.updateCoupon);
 router.delete('/coupons/:id', ensureAuth, couponController.deleteCoupon);
+
+// Reports Routes
+router.get('/dashboard', ensureAuth, reportsController.getDashboardSummary);
+router.get('/reports/revenue', ensureAuth, reportsController.getRevenueByPeriod);
+// router.get('/reports/customers', ensureAuth, reportsController.getCustomerTotals);
+// router.get('/reports/sales', ensureAuth, reportsController.getSales);
+// router.get('/reports/orders/totals', ensureAuth, reportsController.getOrderTotals);
 
 // Debug Route
 

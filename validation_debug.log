@@ -3944,3 +3944,149 @@ Request Body: {
   "stock_status": "instock"
 }
 
+[2026-01-17T15:17:50.043Z] Validation Error: [
+  {
+    "code": "custom",
+    "message": "Stock quantity is required",
+    "path": [
+      "stock_quantity"
+    ]
+  }
+]
+Request Body: {
+  "name": "dsdsa",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>dsadas</p>",
+  "short_description": "<p>asdasd</p>",
+  "manage_stock": true,
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [],
+  "attributes": [],
+  "regular_price": 12,
+  "virtual": false,
+  "downloadable": false
+}
+
+[2026-01-17T15:20:39.230Z] Validation Error: [
+  {
+    "code": "custom",
+    "message": "Stock quantity is required",
+    "path": [
+      "stock_quantity"
+    ]
+  }
+]
+Request Body: {
+  "name": "dsadsa",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>dsadsa</p>",
+  "short_description": "<p>dsadsad</p>",
+  "manage_stock": true,
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [],
+  "attributes": [],
+  "regular_price": 12,
+  "virtual": false,
+  "downloadable": false
+}
+
+[2026-01-17T15:24:35.742Z] Validation Error: [
+  {
+    "code": "custom",
+    "message": "Stock quantity is required",
+    "path": [
+      "stock_quantity"
+    ]
+  }
+]
+Request Body: {
+  "name": "fdsfs",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>fdsf</p>",
+  "short_description": "<p>fdsfsf</p>",
+  "manage_stock": true,
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [],
+  "attributes": [],
+  "regular_price": 12,
+  "virtual": false,
+  "downloadable": false
+}
+
+[2026-01-17T15:24:55.670Z] Validation Error: [
+  {
+    "code": "custom",
+    "message": "Stock quantity is required",
+    "path": [
+      "stock_quantity"
+    ]
+  }
+]
+Request Body: {
+  "name": "fdfd",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p>fdsfsf</p>",
+  "short_description": "<p>sfdsfs</p>",
+  "manage_stock": true,
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [],
+  "attributes": [],
+  "regular_price": 23,
+  "virtual": false,
+  "downloadable": false
+}
+
+[2026-01-17T19:29:43.308Z] Validation Error: [
+  {
+    "code": "custom",
+    "message": "Stock quantity is required",
+    "path": [
+      "stock_quantity"
+    ]
+  }
+]
+Request Body: {
+  "name": "new",
+  "type": "simple",
+  "status": "publish",
+  "description": "<p class=\"ql-indent-2\">new</p>",
+  "short_description": "<p>new</p>",
+  "manage_stock": true,
+  "stock_quantity": null,
+  "stock_status": "instock",
+  "categories": [
+    {
+      "id": 171
+    }
+  ],
+  "images": [],
+  "attributes": [],
+  "regular_price": 12,
+  "virtual": false,
+  "downloadable": false
+}
+

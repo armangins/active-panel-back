@@ -1,6 +1,8 @@
 const NodeCache = require('node-cache');
 const Integration = require('../models/Integration');
+const Order = require('../models/Order'); // Import Order Model
 const encryptionService = require('../config/encryption');
+const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
 
 // In-memory cache for API instances and settings
 const apiCache = new Map();
@@ -744,8 +746,64 @@ const wooService = {
             console.log(`🔥 [CACHE] Warming for user ${userId}`);
             // Fetch page 1 of products
             await wooService.getProducts(userId, { per_page: 24, page: 1 });
+            // Sync Recent Orders
+            await wooService.syncOrders(userId);
         } catch (err) {
             console.error(`❌ [CACHE] Failed to warm for user ${userId}:`, err.message);
+        }
+    },
+
+    syncOrders: async (userId) => {
+        console.log(`🔄 [SYNC] Starting Order Sync for user ${userId}...`);
+        try {
+            const api = await getApi(userId);
+            
+            const response = await api.get("orders", {
+                per_page: 100, // Fetch up to 100 orders (regardless of date for now)
+            });
+            
+            const orders = response.data;
+            console.log(`📦 [SYNC] Fetched ${orders.length} orders from WooCommerce`);
+            
+            let upsertCount = 0;
+            
+            for (const orderData of orders) {
+                // Upsert logic
+                await Order.findOneAndUpdate(
+                    { user: userId, wooId: orderData.id },
+                    {
+                        user: userId,
+                        wooId: orderData.id,
+                        number: orderData.number,
+                        status: orderData.status,
+                        currency: orderData.currency,
+                        date_created: new Date(orderData.date_created),
+                        date_modified: new Date(orderData.date_modified),
+                        total: parseFloat(orderData.total),
+                        customer_id: orderData.customer_id,
+                        billing: {
+                            first_name: orderData.billing?.first_name,
+                            last_name: orderData.billing?.last_name,
+                            email: orderData.billing?.email,
+                            phone: orderData.billing?.phone,
+                            city: orderData.billing?.city,
+                            country: orderData.billing?.country
+                        },
+                        payment_method_title: orderData.payment_method_title,
+                        line_items: orderData.line_items,
+                        syncedAt: new Date()
+                    },
+                    { upsert: true, new: true }
+                );
+                upsertCount++;
+            }
+            
+            console.log(`✅ [SYNC] Successfully synced ${upsertCount} orders for user ${userId}`);
+            return upsertCount;
+            
+        } catch (error) {
+            console.error(`❌ [SYNC] Order Sync Failed for user ${userId}:`, error.message);
+            throw error;
         }
     },
 
